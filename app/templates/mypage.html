@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block content %}
+
+
+
+<body>
+
+    <h3>mypage</h3>
+    {% if request.user.is_authenticated %}
+    <p>ユーザー名：{{ request.user }}</p>
+    <a href="{% url 'logout' %}">ログアウト</a>
+    <a href="{% url 'quiz' %}">問題演習</a>
+    <a href="{% url 'questionCreate' %}">問題作成</a>
+    
+    {% endif %}
+</body>
+
+{% endblock %}

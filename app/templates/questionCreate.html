@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ view.title }}</title>
+    <style>
+        form {
+            display: flex;
+            flex-direction: row;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .left-container {
+            width: 50%;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .right-container {
+            width: 50%;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        /* left-container内のtextareaを80%程度に */
+        .left-container textarea {
+            width: 80%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .choices-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        /* right-container内のchoice-groupを70%程度の幅に */
+        .choice-group {
+            margin-bottom: 20px;
+            width: 70%;
+        }
+
+        .choice-group input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .submit-container {
+            text-align: right;
+        }
+
+        .submit-container button {
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <form method="post">
+
+        {% csrf_token %}
+        <div class="left-container">
+            <div>
+                {{ form.title }}
+            </div>
+            <div>
+                {{ form.category }}
+            </div>
+            <div name="problem_text">
+                {{ form.content }}
+            </div>
+        </div>
+        <div class="right-container">
+            <div class="choices-container">
+                <div class="choice-group">
+                    {{ form.option_1 }}
+                </div>
+                <div class="choice-group">
+                    {{ form.option_2 }}
+                </div>
+                <div class="choice-group">
+                    {{ form.option_3 }}
+                </div>
+                <div class="choice-group">
+                    {{ form.option_4 }}
+                </div>
+            </div>
+            <div class="submit-container">
+                <button type="submit">登録</button>
+            </div>
+            <div>
+                <a href="{% url 'mypage' %}">戻る</a>
+            </div>
+        </div>
+
+    </form>
+
+</body>
+
+</html>

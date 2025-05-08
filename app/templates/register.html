@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="wrapper-login">
+  <h2>ユーザー登録</h2>
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    <ul class="form-contents">
+      <li class="form-group">
+        {{ form.username.label_tag }}
+        <p>必須</p>
+        <br>
+        {{ form.username }}
+        {{ form.username.errors }}
+      </li>
+      <li class="form-group">
+        {{ form.password1.label_tag }}
+        <p>必須</p>
+        <br>
+        {{ form.password1 }}
+        {{ form.password1.errors }}
+      </li>
+      <li class="form-group">
+        {{ form.password2.label_tag }}
+        <p>必須</p>
+        <br>
+        {{ form.password2 }}
+        {{ form.password2.errors }}
+      </li>
+    </ul>
+    <div class="btn">
+      <button type="submit">登録する</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
