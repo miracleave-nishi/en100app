@@ -116,3 +116,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ユーザー管理モデルをCustomUserに変更
 AUTH_USER_MODEL = 'basic_information.CustomUser'
+
+LOGIN_URL = '/login/'

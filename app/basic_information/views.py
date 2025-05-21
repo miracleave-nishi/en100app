@@ -4,9 +4,9 @@ from django.contrib.auth.views import LoginView
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from .forms import CustomUserCreationForm,QuestionForm
-
-
+from django.contrib.auth.decorators import login_required
 from .models import Question
+
 
 def test(request):
     test_message = 'Hello! This page is "EN100_Unit page"'
@@ -15,6 +15,7 @@ def test(request):
 def login(request):
     return render(request, 'login.html')
 
+@login_required
 def mypage(request):
     return render(request, "mypage.html")
 
@@ -45,10 +46,10 @@ def project_list(request):
     return render(request, 'Question_list.html', {'questions': questions})  
 
 def quiz_view(request):
- questions = Question.objects.all()
- results = []
+    questions = Question.objects.all()
+    results = []
 
- if request.method == 'POST':
+    if request.method == 'POST':
         for question in questions:
             user_answer = request.POST.get(f'question_{question.id}')
             if user_answer:
@@ -58,5 +59,5 @@ def quiz_view(request):
                     'is_correct': is_correct,
                 })
 
- return render(request, 'problemPractice.html', {'questions': questions, 'results': results})
+    return render(request, 'problemPractice.html', {'questions': questions, 'results': results})
 
