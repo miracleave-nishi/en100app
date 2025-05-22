@@ -29,13 +29,13 @@ class LoginView(LoginView):
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')  # ログインページ等、リダイレクト先を指定
-    template_name = 'register.html'
+    template_name = 'signup.html'
     
 class QuestionCreateView(CreateView):
     model = Question
     form_class = QuestionForm
-    template_name = 'questionCreate.html'
-    success_url = reverse_lazy('questionCreate')
+    template_name = 'question_create.html'
+    success_url = reverse_lazy('question_create')
 
     
 
@@ -45,7 +45,7 @@ def project_list(request):
     questions = Question.objects.all()
     return render(request, 'Question_list.html', {'questions': questions})  
 
-def quiz_view(request):
+def question_view(request):
     questions = Question.objects.all()
     results = []
 
@@ -59,5 +59,5 @@ def quiz_view(request):
                     'is_correct': is_correct,
                 })
 
-    return render(request, 'problemPractice.html', {'questions': questions, 'results': results})
+    return render(request, 'question_practice.html', {'questions': questions, 'results': results})
 

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="{% url 'questionCreate' %}">問題作成</a></li>
+<li class="breadcrumb-item"><a href="{% url 'question_create' %}">問題作成</a></li>
 {% endblock %}
 {% block content %}
 
@@ -79,7 +79,7 @@
         <div>
             {{ form.category }}
         </div>
-        <div name="problem_text">
+        <div name="question_text">
             {{ form.content }}
         </div>
     </div>
