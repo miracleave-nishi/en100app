@@ -14,10 +14,34 @@
 
 <body>
     <header>
-
+        {% comment %} ナビゲーションバー {% endcomment %}
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'mypage' %}">エン100アプリ</a>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <li class="ms-auto">
+                                <a class="nav-link" href="{% url 'logout' %}">ログアウト</a>
+                            </li>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <main>
+        {% comment %} パンくずリスト {% endcomment %}
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb bg-body-secondary px-3 py-2">
+                <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'mypage' %}">ホーム</a></li>
+                {% block breadcrumb %}
+                <li class="breadcrumb-item active" aria-current="page"></li>
+                {% endblock %}
+            </ol>
+        </nav>
+
         {% block content %}
         リンク1
         {% endblock %}

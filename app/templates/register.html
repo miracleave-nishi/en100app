@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'signup' %}">ユーザー登録</a></li>
+{% endblock %}
 {% block content %}
 
 <div class="wrapper-login">

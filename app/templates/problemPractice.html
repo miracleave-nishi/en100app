@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'quiz' %}">問題演習</a></li>
+{% endblock %}
 {% block content %}
 
 <h1>問題演習</h1>
