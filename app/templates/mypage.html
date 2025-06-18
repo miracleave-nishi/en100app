@@ -1,11 +1,840 @@
 {% extends "base.html" %}
+{% block title %}勉強アプリ（ロゴ）{% endblock %}
 {% block content %}
 
-<h3>mypage</h3>
-{% if request.user.is_authenticated %}
-    <p>ユーザー名：{{ request.user }}</p>
-    <a href="{% url 'question' %}">問題演習</a>
-    <a href="{% url 'question_create' %}">問題作成</a>
-{% endif %}
+<!-- Font Awesome CDN for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="container-fluid px-4 study-dashboard">
+    <div class="row">
+        <!-- メインコンテンツエリア -->
+        <div class="col-lg-8">
+            <!-- ウェルカムセクション -->
+            <div class="welcome-section text-center mb-5">
+                <div class="welcome-card">
+                    <h2 class="welcome-title">
+                        <i class="fas fa-graduation-cap me-2"></i>
+                        おかえりなさい！
+                    </h2>
+                    <p class="welcome-subtitle">今日も一緒に学習を頑張りましょう</p>
+                </div>
+            </div>
+
+            <!-- 学習統計円形エリア -->
+            <div class="text-center mb-5">
+                <div class="study-circle mx-auto">
+                    <div class="circle-content">
+                        <div class="study-stats">
+                            <div class="main-stat">
+                                <span class="stat-number">78</span>
+                                <span class="stat-label">%</span>
+                            </div>
+                            <div class="stat-description">今月の達成率</div>
+                        </div>
+                    </div>
+                    <svg class="progress-ring" width="300" height="300">
+                        <circle class="progress-ring-bg" cx="150" cy="150" r="120" />
+                        <circle class="progress-ring-progress" cx="150" cy="150" r="120" 
+                                style="stroke-dasharray: 754; stroke-dashoffset: 166;" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 前回の学習の続きから始める -->
+            <div class="mb-5">
+                <h4 class="section-title">
+                    <i class="fas fa-play-circle me-2"></i>
+                    前回の学習の続きから始める
+                </h4>
+                <div class="row g-3">
+                    <div class="col-8">
+                        <div class="continue-card">
+                            <div class="card-content">
+                                <div class="card-icon">
+                                    <i class="fas fa-book-open"></i>
+                                </div>
+                                <div class="card-text">
+                                    <h5>データベース設計</h5>
+                                    <p>前回の続きから学習を開始</p>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 65%"></div>
+                                    </div>
+                                    <small class="progress-text">65% 完了</small>
+                                </div>
+                                <a href="{% url 'question' %}" class="continue-btn">
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="streak-card">
+                            <div class="streak-content">
+                                <div class="streak-icon">
+                                    <i class="fas fa-fire"></i>
+                                </div>
+                                <div class="streak-info">
+                                    <div class="streak-number">7</div>
+                                    <div class="streak-label">日連続</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 教材選択 -->
+            <div class="mb-5">
+                <h4 class="section-title">
+                    <i class="fas fa-books me-2"></i>
+                    教材選択
+                </h4>
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="subject-card">
+                            <div class="subject-content">
+                                <div class="subject-icon">
+                                    <i class="fas fa-laptop-code"></i>
+                                </div>
+                                <div class="subject-info">
+                                    <h5>基本情報技術者試験</h5>
+                                    <p>プログラミング、データベース、ネットワーク</p>
+                                    <div class="tags">
+                                        <span class="tag">初級</span>
+                                        <span class="tag">人気</span>
+                                    </div>
+                                </div>
+                                <div class="subject-progress">
+                                    <div class="progress-circle">
+                                        <span>67%</span>
+                                    </div>
+                                </div>
+                                <a href="{% url 'question' %}" class="subject-btn">
+                                    <i class="fas fa-play"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="subject-card create-card">
+                            <div class="subject-content">
+                                <div class="subject-icon create-icon">
+                                    <i class="fas fa-plus-circle"></i>
+                                </div>
+                                <div class="subject-info">
+                                    <h5>オリジナル問題作成</h5>
+                                    <p>自分だけの問題を作成して学習効果UP</p>
+                                    <div class="tags">
+                                        <span class="tag create-tag">作成</span>
+                                        <span class="tag create-tag">カスタム</span>
+                                    </div>
+                                </div>
+                                <div class="subject-progress">
+                                    <div class="create-badge">
+                                        <i class="fas fa-sparkles"></i>
+                                    </div>
+                                </div>
+                                <a href="{% url 'question_create' %}" class="subject-btn create-btn">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- サイドバー -->
+        <div class="col-lg-4">
+            <!-- 学習カレンダー -->
+            <div class="mb-4">
+                <h5 class="sidebar-title">
+                    <i class="fas fa-calendar-alt me-2"></i>
+                    学習カレンダー
+                </h5>
+                <div class="calendar-card">
+                    <div class="calendar-header">
+                        <span class="calendar-month">12月 2024</span>
+                        <div class="calendar-nav">
+                            <i class="fas fa-chevron-left"></i>
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-day-header">日</div>
+                        <div class="calendar-day-header">月</div>
+                        <div class="calendar-day-header">火</div>
+                        <div class="calendar-day-header">水</div>
+                        <div class="calendar-day-header">木</div>
+                        <div class="calendar-day-header">金</div>
+                        <div class="calendar-day-header">土</div>
+                        <div class="calendar-day">1</div>
+                        <div class="calendar-day">2</div>
+                        <div class="calendar-day active">3</div>
+                        <div class="calendar-day studied">4</div>
+                        <div class="calendar-day studied">5</div>
+                        <div class="calendar-day studied">6</div>
+                        <div class="calendar-day current">7</div>
+                        <div class="calendar-day">8</div>
+                        <div class="calendar-day">9</div>
+                        <div class="calendar-day">10</div>
+                        <div class="calendar-day">11</div>
+                        <div class="calendar-day">12</div>
+                        <div class="calendar-day">13</div>
+                        <div class="calendar-day">14</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 達成度 -->
+            <div class="mb-4">
+                <h5 class="sidebar-title">
+                    <i class="fas fa-trophy me-2"></i>
+                    達成度
+                </h5>
+                <div class="achievement-card">
+                    <div class="achievement-item">
+                        <div class="achievement-icon">
+                            <i class="fas fa-target"></i>
+                        </div>
+                        <div class="achievement-info">
+                            <div class="achievement-label">今週の目標</div>
+                            <div class="achievement-progress">
+                                <div class="progress-bar-mini">
+                                    <div class="progress-fill" style="width: 80%"></div>
+                                </div>
+                                <span>4/5 日</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="achievement-info">
+                            <div class="achievement-label">学習時間</div>
+                            <div class="achievement-value">2時間30分</div>
+                        </div>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="achievement-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="achievement-info">
+                            <div class="achievement-label">獲得バッジ</div>
+                            <div class="badges">
+                                <span class="badge-mini">🔥</span>
+                                <span class="badge-mini">📚</span>
+                                <span class="badge-mini">⭐</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 最近の活動 -->
+            <div class="mb-4">
+                <h5 class="sidebar-title">
+                    <i class="fas fa-history me-2"></i>
+                    最近の活動
+                </h5>
+                <div class="activity-card">
+                    <div class="activity-item">
+                        <div class="activity-time">2時間前</div>
+                        <div class="activity-desc">
+                            <i class="fas fa-check-circle success"></i>
+                            データベース問題 10問完了
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-time">昨日</div>
+                        <div class="activity-desc">
+                            <i class="fas fa-star warning"></i>
+                            7日連続学習達成！
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-time">3日前</div>
+                        <div class="activity-desc">
+                            <i class="fas fa-plus-circle info"></i>
+                            新しい問題を3問作成
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if request.user.is_authenticated %}
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="user-info-card">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <strong>{{ request.user }}</strong>
+                        <span class="user-level">レベル 5 学習者</span>
+                    </div>
+                    <div class="user-exp">
+                        <div class="exp-bar">
+                            <div class="exp-fill" style="width: 65%"></div>
+                        </div>
+                        <small>次のレベルまであと 350 XP</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    .study-dashboard {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 2rem 0;
+    }
+
+    .welcome-section {
+        margin-bottom: 3rem;
+    }
+
+    .welcome-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    .welcome-title {
+        color: #4a5568;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    .welcome-subtitle {
+        color: #718096;
+        margin: 0;
+    }
+
+    .study-circle {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .circle-content {
+        position: absolute;
+        z-index: 2;
+        text-align: center;
+    }
+
+    .study-stats .main-stat {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #4299e1;
+    }
+
+    .stat-label {
+        font-size: 1.5rem;
+        color: #4299e1;
+        margin-left: 0.2rem;
+    }
+
+    .stat-description {
+        color: #718096;
+        font-weight: 500;
+    }
+
+    .progress-ring {
+        position: absolute;
+        transform: rotate(-90deg);
+    }
+
+    .progress-ring-bg {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.2);
+        stroke-width: 8;
+    }
+
+    .progress-ring-progress {
+        fill: none;
+        stroke: #4299e1;
+        stroke-width: 8;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 1s ease-in-out;
+        filter: drop-shadow(0 0 10px rgba(66, 153, 225, 0.5));
+    }
+
+    .section-title, .sidebar-title {
+        color: white;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .continue-card, .streak-card, .subject-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .continue-card:hover, .subject-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-content, .subject-content {
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .card-icon, .subject-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .create-icon {
+        background: linear-gradient(135deg, #f093fb, #f5576c);
+    }
+
+    .card-text, .subject-info {
+        flex: 1;
+    }
+
+    .card-text h5, .subject-info h5 {
+        margin: 0 0 0.5rem 0;
+        color: #2d3748;
+        font-weight: 600;
+    }
+
+    .card-text p, .subject-info p {
+        margin: 0 0 0.75rem 0;
+        color: #718096;
+        font-size: 0.9rem;
+    }
+
+    .progress-bar-container {
+        background: #e2e8f0;
+        height: 6px;
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 3px;
+        transition: width 1s ease-in-out;
+    }
+
+    .progress-text {
+        color: #718096;
+        font-size: 0.8rem;
+    }
+
+    .continue-btn, .subject-btn {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .create-btn {
+        background: linear-gradient(135deg, #f093fb, #f5576c);
+    }
+
+    .continue-btn:hover, .subject-btn:hover {
+        transform: scale(1.1);
+        color: white;
+    }
+
+    .streak-card {
+        background: linear-gradient(135deg, #ff6b6b, #ffa500);
+    }
+
+    .streak-content {
+        padding: 1.5rem;
+        text-align: center;
+        color: white;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .streak-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .streak-number {
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    .streak-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+    }
+
+    .tags {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .tag {
+        background: #e2e8f0;
+        color: #4a5568;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .create-tag {
+        background: linear-gradient(135deg, #f093fb, #f5576c);
+        color: white;
+    }
+
+    .progress-circle {
+        width: 50px;
+        height: 50px;
+        background: conic-gradient(#667eea 0deg 241deg, #e2e8f0 241deg 360deg);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .progress-circle::before {
+        content: '';
+        width: 35px;
+        height: 35px;
+        background: white;
+        border-radius: 50%;
+        position: absolute;
+    }
+
+    .progress-circle span {
+        position: relative;
+        z-index: 1;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #4a5568;
+    }
+
+    .create-badge {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #f093fb, #f5576c);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+    }
+
+    .calendar-card, .achievement-card, .activity-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    .calendar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .calendar-month {
+        font-weight: 600;
+        color: #2d3748;
+    }
+
+    .calendar-nav {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .calendar-nav i {
+        cursor: pointer;
+        color: #718096;
+        transition: color 0.3s ease;
+    }
+
+    .calendar-nav i:hover {
+        color: #4299e1;
+    }
+
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.25rem;
+    }
+
+    .calendar-day-header {
+        text-align: center;
+        font-size: 0.8rem;
+        color: #718096;
+        font-weight: 600;
+        padding: 0.5rem;
+    }
+
+    .calendar-day {
+        text-align: center;
+        padding: 0.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .calendar-day:hover {
+        background: #e2e8f0;
+    }
+
+    .calendar-day.current {
+        background: #4299e1;
+        color: white;
+    }
+
+    .calendar-day.studied {
+        background: #48bb78;
+        color: white;
+    }
+
+    .calendar-day.active {
+        background: #667eea;
+        color: white;
+    }
+
+    .achievement-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .achievement-item:last-child {
+        border-bottom: none;
+    }
+
+    .achievement-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+
+    .achievement-info {
+        flex: 1;
+    }
+
+    .achievement-label {
+        font-size: 0.9rem;
+        color: #718096;
+        margin-bottom: 0.25rem;
+    }
+
+    .achievement-value {
+        font-weight: 600;
+        color: #2d3748;
+    }
+
+    .achievement-progress {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .progress-bar-mini {
+        flex: 1;
+        height: 4px;
+        background: #e2e8f0;
+        border-radius: 2px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 2px;
+        transition: width 1s ease-in-out;
+    }
+
+    .badges {
+        display: flex;
+        gap: 0.25rem;
+    }
+
+    .badge-mini {
+        font-size: 1.2rem;
+    }
+
+    .activity-item {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .activity-item:last-child {
+        border-bottom: none;
+    }
+
+    .activity-time {
+        font-size: 0.8rem;
+        color: #718096;
+        margin-bottom: 0.25rem;
+    }
+
+    .activity-desc {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: #2d3748;
+    }
+
+    .activity-desc i.success { color: #48bb78; }
+    .activity-desc i.warning { color: #ed8936; }
+    .activity-desc i.info { color: #4299e1; }
+
+    .user-info-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    .user-avatar {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .user-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user-level {
+        font-size: 0.9rem;
+        color: #718096;
+    }
+
+    .user-exp {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        min-width: 150px;
+    }
+
+    .exp-bar {
+        height: 8px;
+        background: #e2e8f0;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .exp-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        border-radius: 4px;
+        transition: width 1s ease-in-out;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* レスポンシブデザイン */
+    @media (max-width: 768px) {
+        .study-circle {
+            width: 250px;
+            height: 250px;
+        }
+        
+        .progress-ring {
+            width: 250px;
+            height: 250px;
+        }
+        
+        .progress-ring-bg, .progress-ring-progress {
+            cx: 125;
+            cy: 125;
+            r: 100;
+        }
+        
+        .card-content, .subject-content {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .user-info-card {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>
 
 {% endblock %}
