@@ -14,13 +14,13 @@
     <title>{% block title %}基本情報技術者試験問題集{% endblock %}</title>
 </head>
 
-<body class="rich-app-body">
-    <header class="rich-header">
+<body class="system-body">
+    <header class="system-header">
         {% comment %} ナビゲーションバー {% endcomment %}
-        <nav class="rich-navbar">
+        <nav class="system-navbar">
             <div class="container-fluid">
                 <div class="navbar-content">
-                    <a class="rich-brand" href="{% url 'mypage' %}">
+                    <a class="system-brand" href="{% url 'mypage' %}">
                         <div class="brand-icon">
                             <i class="fas fa-graduation-cap"></i>
                         </div>
@@ -56,9 +56,9 @@
         </nav>
     </header>
 
-    <main class="rich-main">
+    <main class="system-main">
         {% comment %} パンくずリスト {% endcomment %}
-        <nav class="rich-breadcrumb" aria-label="breadcrumb">
+        <nav class="system-breadcrumb" aria-label="breadcrumb">
             <div class="container-fluid">
                 <div class="breadcrumb-container">
                     <div class="breadcrumb-path">
@@ -102,7 +102,7 @@
         </div>
     </main>
     
-    <footer class="rich-footer">
+    <footer class="system-footer">
         <div class="container-fluid">
             <div class="footer-content">
                 <div class="footer-section">
@@ -128,24 +128,21 @@
 </body>
 
 <style>
-    .rich-app-body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    .system-body {
+        background: #f8f9fa;
         min-height: 100vh;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: #212529;
     }
 
-    .rich-header {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        backdrop-filter: blur(20px);
-        background: rgba(255, 255, 255, 0.1);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    .system-header {
+        background: #ffffff;
+        border-bottom: 1px solid #dee2e6;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
 
-    .rich-navbar {
-        padding: 1rem 0;
+    .system-navbar {
+        padding: 0.75rem 0;
     }
 
     .navbar-content {
@@ -155,31 +152,29 @@
         gap: 2rem;
     }
 
-    .rich-brand {
+    .system-brand {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: 0.75rem;
         text-decoration: none;
-        color: white;
-        transition: all 0.3s ease;
+        color: #495057;
+        transition: color 0.2s ease;
     }
 
-    .rich-brand:hover {
-        color: rgba(255, 255, 255, 0.9);
-        transform: scale(1.02);
+    .system-brand:hover {
+        color: #2c5aa0;
     }
 
     .brand-icon {
-        width: 50px;
-        height: 50px;
-        background: linear-gradient(135deg, #ff6b6b, #ffa500);
-        border-radius: 12px;
+        width: 40px;
+        height: 40px;
+        background: #2c5aa0;
+        border-radius: 4px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         color: white;
-        box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
     }
 
     .brand-text {
@@ -188,116 +183,115 @@
     }
 
     .brand-name {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 0.2rem;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 0.1rem;
+        color: #212529;
     }
 
     .brand-subtitle {
-        font-size: 0.9rem;
-        opacity: 0.8;
+        font-size: 0.8rem;
+        color: #6c757d;
     }
 
     .navbar-actions {
         display: flex;
         align-items: center;
-        gap: 2rem;
+        gap: 1.5rem;
     }
 
     .user-menu {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 0.75rem 1.5rem;
-        border-radius: 50px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        gap: 0.75rem;
+        background: #f8f9fa;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        border: 1px solid #dee2e6;
     }
 
     .user-avatar {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        width: 32px;
+        height: 32px;
+        background: #6c757d;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .user-info {
         display: flex;
         flex-direction: column;
-        color: white;
     }
 
     .user-name {
-        font-weight: 600;
-        font-size: 0.9rem;
+        font-weight: 500;
+        font-size: 0.85rem;
+        color: #212529;
+        line-height: 1.2;
     }
 
     .user-status {
-        font-size: 0.8rem;
-        opacity: 0.8;
-        color: #4ade80;
+        font-size: 0.75rem;
+        color: #28a745;
+        line-height: 1.2;
     }
 
     .navbar-buttons {
         display: flex;
-        gap: 1rem;
+        gap: 0.75rem;
     }
 
     .nav-btn {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        padding: 0.75rem 1.5rem;
-        border-radius: 25px;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
         text-decoration: none;
-        font-weight: 600;
-        font-size: 0.9rem;
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
+        font-weight: 500;
+        font-size: 0.85rem;
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
     }
 
     .nav-btn.primary {
-        background: linear-gradient(135deg, #4ade80, #22c55e);
+        background: #0d6efd;
         color: white;
-        box-shadow: 0 4px 20px rgba(74, 222, 128, 0.3);
+        border-color: #0d6efd;
     }
 
     .nav-btn.primary:hover {
+        background: #0b5ed7;
+        border-color: #0a58ca;
         color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 30px rgba(74, 222, 128, 0.4);
     }
 
     .nav-btn.secondary {
-        background: rgba(255, 255, 255, 0.1);
+        background: #6c757d;
         color: white;
-        border-color: rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(10px);
+        border-color: #6c757d;
     }
 
     .nav-btn.secondary:hover {
-        background: rgba(255, 255, 255, 0.2);
+        background: #5c636a;
+        border-color: #565e64;
         color: white;
-        transform: translateY(-2px);
     }
 
-    .rich-main {
+    .system-main {
         flex: 1;
         padding-bottom: 2rem;
     }
 
-    .rich-breadcrumb {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 1rem 0;
-        margin-bottom: 2rem;
+    .system-breadcrumb {
+        background: #ffffff;
+        border-bottom: 1px solid #dee2e6;
+        padding: 0.75rem 0;
+        margin-bottom: 1.5rem;
     }
 
     .breadcrumb-container {
@@ -309,42 +303,43 @@
     .breadcrumb-path {
         display: flex;
         align-items: center;
-        gap: 1rem;
+        gap: 0.5rem;
     }
 
     .breadcrumb-link {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        color: rgba(255, 255, 255, 0.8);
+        gap: 0.4rem;
+        color: #6c757d;
         text-decoration: none;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        transition: all 0.3s ease;
-        font-weight: 500;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        font-weight: 400;
+        font-size: 0.9rem;
     }
 
     .breadcrumb-link:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        transform: translateY(-1px);
+        background: #f8f9fa;
+        color: #495057;
     }
 
     .breadcrumb-link.home {
-        background: rgba(255, 255, 255, 0.15);
-        color: white;
+        background: #e9ecef;
+        color: #495057;
+        font-weight: 500;
     }
 
     .breadcrumb-link.current {
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: #2c5aa0;
         color: white;
-        font-weight: 600;
+        font-weight: 500;
     }
 
     .breadcrumb-actions {
         display: flex;
         align-items: center;
-        gap: 1.5rem;
+        gap: 1rem;
     }
 
     .progress-indicator {
@@ -360,48 +355,42 @@
 
     .progress-ring-bg-mini {
         fill: none;
-        stroke: rgba(255, 255, 255, 0.2);
+        stroke: #dee2e6;
         stroke-width: 3;
     }
 
     .progress-ring-progress-mini {
         fill: none;
-        stroke: #4ade80;
+        stroke: #28a745;
         stroke-width: 3;
         stroke-linecap: round;
         transform: rotate(-90deg);
         transform-origin: 50% 50%;
-        filter: drop-shadow(0 0 5px rgba(74, 222, 128, 0.5));
     }
 
     .progress-text-mini {
         position: absolute;
         font-size: 0.7rem;
         font-weight: 600;
-        color: white;
+        color: #495057;
     }
 
     .study-streak {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        background: linear-gradient(135deg, #ff6b6b, #ffa500);
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-weight: 600;
-        font-size: 0.9rem;
-        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-        animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
+        gap: 0.4rem;
+        background: #ffc107;
+        color: #212529;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 0.85rem;
+        border: 1px solid #ffca2c;
     }
 
     .content-wrapper {
         min-height: calc(100vh - 200px);
+        padding: 0 15px;
     }
 
     .default-content {
@@ -413,65 +402,67 @@
 
     .welcome-message {
         text-align: center;
-        color: white;
-        background: rgba(255, 255, 255, 0.1);
+        color: #495057;
+        background: #ffffff;
         padding: 3rem;
-        border-radius: 20px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        max-width: 500px;
     }
 
     .welcome-message i {
-        font-size: 3rem;
+        font-size: 2.5rem;
         margin-bottom: 1rem;
-        color: #4ade80;
+        color: #2c5aa0;
     }
 
     .welcome-message h2 {
         margin-bottom: 1rem;
-        font-weight: 700;
+        font-weight: 600;
+        color: #212529;
     }
 
     .welcome-message p {
-        opacity: 0.8;
+        color: #6c757d;
         margin: 0;
     }
 
-    .rich-footer {
-        background: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(10px);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        color: white;
-        padding: 2rem 0 1rem;
+    .system-footer {
+        background: #ffffff;
+        border-top: 1px solid #dee2e6;
+        color: #495057;
+        padding: 1.5rem 0 1rem;
         margin-top: auto;
     }
 
     .footer-content {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        margin-bottom: 2rem;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
     }
 
     .footer-section h6 {
-        color: #4ade80;
-        margin-bottom: 1rem;
+        color: #2c5aa0;
+        margin-bottom: 0.75rem;
         font-weight: 600;
+        font-size: 0.9rem;
     }
 
     .footer-section p {
-        opacity: 0.8;
+        color: #6c757d;
         margin: 0;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        line-height: 1.4;
     }
 
     .footer-bottom {
         text-align: center;
         padding-top: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        opacity: 0.6;
-        font-size: 0.9rem;
+        border-top: 1px solid #dee2e6;
+        color: #6c757d;
+        font-size: 0.8rem;
     }
 
     /* レスポンシブデザイン */
@@ -514,6 +505,11 @@
         .brand-text {
             display: none;
         }
+
+        .welcome-message {
+            padding: 2rem;
+            margin: 0 1rem;
+        }
     }
 
     @media (max-width: 576px) {
@@ -523,6 +519,14 @@
         
         .user-info {
             display: none;
+        }
+
+        .system-navbar {
+            padding: 0.5rem 0;
+        }
+
+        .welcome-message {
+            padding: 1.5rem;
         }
     }
 </style>

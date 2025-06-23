@@ -5,50 +5,775 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>基本情報技術者試験問題集 - 新規登録</title>
+    <title>エン100アプリ - 新規アカウント作成</title>
     
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- カスタムCSS -->
     <link href="{% static 'reset.css' %}" rel="stylesheet">
     <link href="{% static 'style.css' %}" rel="stylesheet">
 </head>
 
-<body>
-    <div class="wrapper-login">
-        <h2>ユーザー登録</h2>
-        <form method="post" novalidate>
-            {% csrf_token %}
-            
-            <ul class="form-contents">
-                <li class="form-group">
-                    {{ form.username.label_tag }}
-                    <p>必須</p>
-                    <br>
-                    {{ form.username }}
-                    {{ form.username.errors }}
-                </li>
-                <li class="form-group">
-                    {{ form.password1.label_tag }}
-                    <p>必須</p>
-                    <br>
-                    {{ form.password1 }}
-                    {{ form.password1.errors }}
-                </li>
-                <li class="form-group">
-                    {{ form.password2.label_tag }}
-                    <p>必須</p>
-                    <br>
-                    {{ form.password2 }}
-                    {{ form.password2.errors }}
-                </li>
-            </ul>
-            <div class="btn">
-                <button type="submit">登録する</button>
+<body class="signup-body">
+    <div class="signup-container">
+        <!-- ヘッダー -->
+        <header class="signup-header">
+            <div class="container">
+                <div class="header-brand">
+                    <div class="brand-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="brand-text">
+                        <h1 class="brand-name">エン100アプリ</h1>
+                        <p class="brand-subtitle">学習管理システム</p>
+                    </div>
+                </div>
             </div>
-        </form>
+        </header>
+
+        <!-- メインコンテンツ -->
+        <main class="signup-main">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-md-7 col-sm-9">
+                        <div class="signup-card">
+                            <div class="signup-card-header">
+                                <h2 class="signup-title">
+                                    <i class="fas fa-user-plus me-2"></i>
+                                    新規アカウント作成
+                                </h2>
+                                <p class="signup-subtitle">学習を始めるためのアカウントを作成してください</p>
+                            </div>
+                            
+                            <div class="signup-card-body">
+                                {% if form.non_field_errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        <i class="fas fa-exclamation-triangle me-2"></i>
+                                        {{ form.non_field_errors|striptags }}
+                                    </div>
+                                {% endif %}
+
+                                <form method="post" class="signup-form" novalidate>
+                                    {% csrf_token %}
+                                    
+                                    <div class="form-group mb-3">
+                                        <label class="form-label required" for="{{ form.username.id_for_label }}">
+                                            <i class="fas fa-user me-1"></i>
+                                            ユーザー名
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-user"></i>
+                                            </span>
+                                            {{ form.username }}
+                                        </div>
+                                        <div class="form-help">
+                                            4文字以上で、英数字とアンダースコア(_)のみ使用可能です
+                                        </div>
+                                        {% if form.username.errors %}
+                                            <div class="form-error">
+                                                <i class="fas fa-exclamation-circle me-1"></i>
+                                                {{ form.username.errors|striptags }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label class="form-label required" for="{{ form.password1.id_for_label }}">
+                                            <i class="fas fa-lock me-1"></i>
+                                            パスワード
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-lock"></i>
+                                            </span>
+                                            {{ form.password1 }}
+                                            <button type="button" class="input-group-text password-toggle" data-target="password1">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        <div class="form-help">
+                                            8文字以上で、英数字を含む複雑なパスワードを設定してください
+                                        </div>
+                                        {% if form.password1.errors %}
+                                            <div class="form-error">
+                                                <i class="fas fa-exclamation-circle me-1"></i>
+                                                {{ form.password1.errors|striptags }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <label class="form-label required" for="{{ form.password2.id_for_label }}">
+                                            <i class="fas fa-check-circle me-1"></i>
+                                            パスワード（確認）
+                                        </label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-check-circle"></i>
+                                            </span>
+                                            {{ form.password2 }}
+                                            <button type="button" class="input-group-text password-toggle" data-target="password2">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        <div class="form-help">
+                                            上記と同じパスワードを入力してください
+                                        </div>
+                                        {% if form.password2.errors %}
+                                            <div class="form-error">
+                                                <i class="fas fa-exclamation-circle me-1"></i>
+                                                {{ form.password2.errors|striptags }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- 利用規約同意 -->
+                                    <div class="form-group mb-4">
+                                        <div class="form-check agreement-check">
+                                            <input class="form-check-input" type="checkbox" id="agreement" required>
+                                            <label class="form-check-label" for="agreement">
+                                                <a href="#" class="terms-link">利用規約</a>および<a href="#" class="terms-link">プライバシーポリシー</a>に同意します
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn-signup" id="submitBtn" disabled>
+                                        <i class="fas fa-user-plus me-2"></i>
+                                        アカウントを作成
+                                    </button>
+                                </form>
+
+                                <div class="signup-divider">
+                                    <span>または</span>
+                                </div>
+
+                                <div class="login-section">
+                                    <p class="login-text">既にアカウントをお持ちの場合</p>
+                                    <a href="{% url 'login' %}" class="btn-login-redirect">
+                                        <i class="fas fa-sign-in-alt me-2"></i>
+                                        ログインページへ
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- アカウント作成の注意事項 -->
+                        <div class="info-card">
+                            <div class="info-header">
+                                <i class="fas fa-info-circle me-2"></i>
+                                アカウント作成について
+                            </div>
+                            <div class="info-content">
+                                <ul class="info-list">
+                                    <li><i class="fas fa-check text-success me-2"></i>無料でご利用いただけます</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>学習進捗が自動保存されます</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>問題作成機能が使用できます</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>いつでも退会可能です</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- セキュリティ情報 -->
+                        <div class="security-info">
+                            <div class="security-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>データ暗号化</span>
+                            </div>
+                            <div class="security-item">
+                                <i class="fas fa-user-shield"></i>
+                                <span>プライバシー保護</span>
+                            </div>
+                            <div class="security-item">
+                                <i class="fas fa-server"></i>
+                                <span>安全なサーバー</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- フッター -->
+        <footer class="signup-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-links">
+                        <a href="#">利用規約</a>
+                        <a href="#">プライバシーポリシー</a>
+                        <a href="#">サポート</a>
+                        <a href="#">お問い合わせ</a>
+                    </div>
+                    <div class="footer-info">
+                        <p>&copy; 2024 エン100アプリ. All rights reserved.</p>
+                        <p>バージョン 1.2.3 | 最終更新: 2024年12月</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
+
+    <style>
+        .signup-body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .signup-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .signup-header {
+            background: #ffffff;
+            border-bottom: 1px solid #dee2e6;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 1rem 0;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-icon {
+            width: 50px;
+            height: 50px;
+            background: #2c5aa0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .brand-name {
+            color: #212529;
+            font-weight: 700;
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .brand-subtitle {
+            color: #6c757d;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .signup-main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 2rem 0;
+        }
+
+        .signup-card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #dee2e6;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .signup-card-header {
+            background: #f8f9fa;
+            padding: 2rem 2rem 1rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .signup-title {
+            color: #212529;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .signup-subtitle {
+            color: #6c757d;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .signup-card-body {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-label.required::after {
+            content: "*";
+            color: #dc3545;
+            margin-left: 0.25rem;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .input-group-text {
+            background: #e9ecef;
+            border: 2px solid #e9ecef;
+            border-right: none;
+            color: #6c757d;
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px 0 0 6px;
+            width: 48px;
+            height: 48px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+
+        .input-group .form-control,
+        .input-group input[type="text"], 
+        .input-group input[type="password"] {
+            border: 2px solid #e9ecef !important;
+            border-left: none !important;
+            border-radius: 0 !important;
+            padding: 0.75rem !important;
+            font-size: 0.9rem !important;
+            transition: border-color 0.2s ease !important;
+            flex: 1 !important;
+            height: 48px !important;
+            line-height: 1.2 !important;
+            box-sizing: border-box !important;
+            margin: 0 !important;
+        }
+
+        .input-group input[type="text"]:only-of-type {
+            border-radius: 0 6px 6px 0 !important;
+        }
+
+        .input-group input[type="password"]:not(:last-child) {
+            border-radius: 0 !important;
+            border-right: none !important;
+        }
+
+        .input-group .form-control:focus,
+        .input-group input[type="text"]:focus, 
+        .input-group input[type="password"]:focus {
+            outline: none !important;
+            border-color: #2c5aa0 !important;
+            box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.25) !important;
+            z-index: 3 !important;
+        }
+
+        .input-group:focus-within .input-group-text {
+            border-color: #2c5aa0;
+        }
+
+        .password-toggle {
+            cursor: pointer;
+            background: #e9ecef;
+            border: 2px solid #e9ecef;
+            border-left: none;
+            border-radius: 0 6px 6px 0;
+            transition: background-color 0.2s ease;
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+
+        .password-toggle:hover {
+            background: #ddd;
+        }
+
+        .form-help {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+            line-height: 1.4;
+        }
+
+        .form-error {
+            color: #dc3545;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .agreement-check {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .agreement-check .form-check-input {
+            position: static !important;
+            margin: 0 !important;
+            flex-shrink: 0;
+            width: 1.1rem;
+            height: 1.1rem;
+            margin-top: 0.125rem !important;
+        }
+
+        .form-check-label {
+            color: #495057;
+            cursor: pointer;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .terms-link {
+            color: #2c5aa0;
+            text-decoration: none;
+        }
+
+        .terms-link:hover {
+            color: #1e3d72;
+            text-decoration: underline;
+        }
+
+        .btn-signup {
+            width: 100%;
+            background: #2c5aa0;
+            color: white;
+            border: none;
+            padding: 0.875rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-signup:hover:not(:disabled) {
+            background: #1e3d72;
+        }
+
+        .btn-signup:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .signup-divider {
+            text-align: center;
+            position: relative;
+            margin: 1.5rem 0;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .signup-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #dee2e6;
+            z-index: 1;
+        }
+
+        .signup-divider span {
+            background: white;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-section {
+            text-align: center;
+        }
+
+        .login-text {
+            color: #6c757d;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-login-redirect {
+            width: 100%;
+            background: #6c757d;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-login-redirect:hover {
+            background: #5a6268;
+            color: white;
+        }
+
+        .info-card {
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .info-header {
+            background: #e3f2fd;
+            padding: 1rem 1.5rem;
+            color: #1976d2;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .info-content {
+            padding: 1.5rem;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .info-list li {
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+            color: #495057;
+            display: flex;
+            align-items: center;
+        }
+
+        .security-info {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: #ffffff;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+        }
+
+        .security-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6c757d;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .security-item i {
+            color: #28a745;
+            font-size: 1.2rem;
+        }
+
+        .signup-footer {
+            background: #ffffff;
+            border-top: 1px solid #dee2e6;
+            padding: 1.5rem 0;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links a {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #2c5aa0;
+        }
+
+        .footer-info {
+            text-align: right;
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+
+        .footer-info p {
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .alert {
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* レスポンシブデザイン */
+        @media (max-width: 768px) {
+            .signup-main {
+                padding: 1rem 0;
+            }
+
+            .signup-card-header {
+                padding: 1.5rem 1.5rem 1rem 1.5rem;
+            }
+
+            .signup-card-body {
+                padding: 1.5rem;
+            }
+
+            .header-brand {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-info {
+                text-align: center;
+            }
+
+            .security-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .signup-card-header {
+                padding: 1rem;
+            }
+
+            .signup-card-body {
+                padding: 1rem;
+            }
+
+            .brand-name {
+                font-size: 1.5rem;
+            }
+
+            .signup-title {
+                font-size: 1.25rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // パスワード表示/非表示切り替え
+            const passwordToggles = document.querySelectorAll('.password-toggle');
+            
+            passwordToggles.forEach(function(toggle) {
+                toggle.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    const passwordField = document.querySelector(`input[name="${target}"]`);
+                    
+                    if (passwordField) {
+                        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                        passwordField.setAttribute('type', type);
+                        
+                        const icon = this.querySelector('i');
+                        if (type === 'password') {
+                            icon.className = 'fas fa-eye';
+                        } else {
+                            icon.className = 'fas fa-eye-slash';
+                        }
+                    }
+                });
+            });
+
+            // 利用規約同意チェックボックス
+            const agreementCheck = document.getElementById('agreement');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (agreementCheck && submitBtn) {
+                agreementCheck.addEventListener('change', function() {
+                    submitBtn.disabled = !this.checked;
+                });
+            }
+
+            // フォームバリデーション
+            const signupForm = document.querySelector('.signup-form');
+            if (signupForm) {
+                signupForm.addEventListener('submit', function(e) {
+                    const username = document.querySelector('input[name="username"]').value;
+                    const password1 = document.querySelector('input[name="password1"]').value;
+                    const password2 = document.querySelector('input[name="password2"]').value;
+                    const agreement = document.getElementById('agreement').checked;
+                    
+                    if (!username.trim() || !password1.trim() || !password2.trim()) {
+                        e.preventDefault();
+                        alert('すべての項目を入力してください。');
+                        return;
+                    }
+                    
+                    if (password1 !== password2) {
+                        e.preventDefault();
+                        alert('パスワードが一致しません。');
+                        return;
+                    }
+                    
+                    if (!agreement) {
+                        e.preventDefault();
+                        alert('利用規約とプライバシーポリシーに同意してください。');
+                        return;
+                    }
+                });
+            }
+        });
+    </script>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

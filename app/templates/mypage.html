@@ -5,23 +5,23 @@
 <!-- Font Awesome CDN for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<div class="container-fluid px-4 study-dashboard">
+<div class="container-fluid px-4 system-dashboard">
     <div class="row">
         <!-- メインコンテンツエリア -->
         <div class="col-lg-8">
             <!-- ウェルカムセクション -->
-            <div class="welcome-section text-center mb-5">
+            <div class="welcome-section mb-4">
                 <div class="welcome-card">
-                    <h2 class="welcome-title">
+                    <h3 class="welcome-title">
                         <i class="fas fa-graduation-cap me-2"></i>
                         おかえりなさい！
-                    </h2>
+                    </h3>
                     <p class="welcome-subtitle">今日も一緒に学習を頑張りましょう</p>
                 </div>
             </div>
 
             <!-- 学習統計円形エリア -->
-            <div class="text-center mb-5">
+            <div class="text-center mb-4">
                 <div class="study-circle mx-auto">
                     <div class="circle-content">
                         <div class="study-stats">
@@ -32,20 +32,20 @@
                             <div class="stat-description">今月の達成率</div>
                         </div>
                     </div>
-                    <svg class="progress-ring" width="300" height="300">
-                        <circle class="progress-ring-bg" cx="150" cy="150" r="120" />
-                        <circle class="progress-ring-progress" cx="150" cy="150" r="120" 
-                                style="stroke-dasharray: 754; stroke-dashoffset: 166;" />
+                    <svg class="progress-ring" width="200" height="200">
+                        <circle class="progress-ring-bg" cx="100" cy="100" r="80" />
+                        <circle class="progress-ring-progress" cx="100" cy="100" r="80" 
+                                style="stroke-dasharray: 502; stroke-dashoffset: 110;" />
                     </svg>
                 </div>
             </div>
 
             <!-- 前回の学習の続きから始める -->
-            <div class="mb-5">
-                <h4 class="section-title">
+            <div class="mb-4">
+                <h5 class="section-title">
                     <i class="fas fa-play-circle me-2"></i>
                     前回の学習の続きから始める
-                </h4>
+                </h5>
                 <div class="row g-3">
                     <div class="col-8">
                         <div class="continue-card">
@@ -54,7 +54,7 @@
                                     <i class="fas fa-book-open"></i>
                                 </div>
                                 <div class="card-text">
-                                    <h5>データベース設計</h5>
+                                    <h6>データベース設計</h6>
                                     <p>前回の続きから学習を開始</p>
                                     <div class="progress-bar-container">
                                         <div class="progress-bar" style="width: 65%"></div>
@@ -84,11 +84,11 @@
             </div>
 
             <!-- 教材選択 -->
-            <div class="mb-5">
-                <h4 class="section-title">
+            <div class="mb-4">
+                <h5 class="section-title">
                     <i class="fas fa-books me-2"></i>
                     教材選択
-                </h4>
+                </h5>
                 <div class="row g-3">
                     <div class="col-12">
                         <div class="subject-card">
@@ -97,7 +97,7 @@
                                     <i class="fas fa-laptop-code"></i>
                                 </div>
                                 <div class="subject-info">
-                                    <h5>基本情報技術者試験</h5>
+                                    <h6>基本情報技術者試験</h6>
                                     <p>プログラミング、データベース、ネットワーク</p>
                                     <div class="tags">
                                         <span class="tag">初級</span>
@@ -122,7 +122,7 @@
                                     <i class="fas fa-plus-circle"></i>
                                 </div>
                                 <div class="subject-info">
-                                    <h5>オリジナル問題作成</h5>
+                                    <h6>オリジナル問題作成</h6>
                                     <p>自分だけの問題を作成して学習効果UP</p>
                                     <div class="tags">
                                         <span class="tag create-tag">作成</span>
@@ -148,10 +148,10 @@
         <div class="col-lg-4">
             <!-- 学習カレンダー -->
             <div class="mb-4">
-                <h5 class="sidebar-title">
+                <h6 class="sidebar-title">
                     <i class="fas fa-calendar-alt me-2"></i>
                     学習カレンダー
-                </h5>
+                </h6>
                 <div class="calendar-card">
                     <div class="calendar-header">
                         <span class="calendar-month">12月 2024</span>
@@ -188,10 +188,10 @@
 
             <!-- 達成度 -->
             <div class="mb-4">
-                <h5 class="sidebar-title">
+                <h6 class="sidebar-title">
                     <i class="fas fa-trophy me-2"></i>
                     達成度
-                </h5>
+                </h6>
                 <div class="achievement-card">
                     <div class="achievement-item">
                         <div class="achievement-icon">
@@ -234,10 +234,10 @@
 
             <!-- 最近の活動 -->
             <div class="mb-4">
-                <h5 class="sidebar-title">
+                <h6 class="sidebar-title">
                     <i class="fas fa-history me-2"></i>
                     最近の活動
-                </h5>
+                </h6>
                 <div class="activity-card">
                     <div class="activity-item">
                         <div class="activity-time">2時間前</div>
@@ -289,40 +289,41 @@
 </div>
 
 <style>
-    .study-dashboard {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    .system-dashboard {
+        background: #f8f9fa;
         min-height: 100vh;
-        padding: 2rem 0;
+        padding: 1.5rem 0;
     }
 
     .welcome-section {
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
     }
 
     .welcome-card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 20px;
-        padding: 2rem;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-        animation: fadeInUp 0.8s ease-out;
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        border: 1px solid #dee2e6;
     }
 
     .welcome-title {
-        color: #4a5568;
-        font-weight: 700;
+        color: #212529;
+        font-weight: 600;
         margin-bottom: 0.5rem;
+        font-size: 1.25rem;
     }
 
     .welcome-subtitle {
-        color: #718096;
+        color: #6c757d;
         margin: 0;
+        font-size: 0.95rem;
     }
 
     .study-circle {
         position: relative;
-        width: 300px;
-        height: 300px;
+        width: 200px;
+        height: 200px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -342,20 +343,21 @@
     }
 
     .stat-number {
-        font-size: 3rem;
+        font-size: 2.5rem;
         font-weight: 700;
-        color: #4299e1;
+        color: #2c5aa0;
     }
 
     .stat-label {
-        font-size: 1.5rem;
-        color: #4299e1;
+        font-size: 1.2rem;
+        color: #2c5aa0;
         margin-left: 0.2rem;
     }
 
     .stat-description {
-        color: #718096;
+        color: #6c757d;
         font-weight: 500;
+        font-size: 0.9rem;
     }
 
     .progress-ring {
@@ -365,130 +367,140 @@
 
     .progress-ring-bg {
         fill: none;
-        stroke: rgba(255, 255, 255, 0.2);
-        stroke-width: 8;
+        stroke: #dee2e6;
+        stroke-width: 6;
     }
 
     .progress-ring-progress {
         fill: none;
-        stroke: #4299e1;
-        stroke-width: 8;
+        stroke: #2c5aa0;
+        stroke-width: 6;
         stroke-linecap: round;
         transition: stroke-dashoffset 1s ease-in-out;
-        filter: drop-shadow(0 0 10px rgba(66, 153, 225, 0.5));
     }
 
     .section-title, .sidebar-title {
-        color: white;
+        color: #495057;
         font-weight: 600;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
         display: flex;
         align-items: center;
+        font-size: 1.1rem;
+    }
+
+    .sidebar-title {
+        font-size: 1rem;
     }
 
     .continue-card, .streak-card, .subject-card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
+        background: #ffffff;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: box-shadow 0.2s ease;
         height: 100%;
     }
 
     .continue-card:hover, .subject-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .card-content, .subject-content {
-        padding: 1.5rem;
+        padding: 1.25rem;
         display: flex;
         align-items: center;
         gap: 1rem;
     }
 
     .card-icon, .subject-icon {
-        width: 50px;
-        height: 50px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border-radius: 12px;
+        width: 45px;
+        height: 45px;
+        background: #2c5aa0;
+        border-radius: 6px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     .create-icon {
-        background: linear-gradient(135deg, #f093fb, #f5576c);
+        background: #dc3545;
     }
 
     .card-text, .subject-info {
         flex: 1;
     }
 
-    .card-text h5, .subject-info h5 {
-        margin: 0 0 0.5rem 0;
-        color: #2d3748;
+    .card-text h6, .subject-info h6 {
+        margin: 0 0 0.4rem 0;
+        color: #212529;
         font-weight: 600;
+        font-size: 1rem;
     }
 
     .card-text p, .subject-info p {
-        margin: 0 0 0.75rem 0;
-        color: #718096;
-        font-size: 0.9rem;
+        margin: 0 0 0.6rem 0;
+        color: #6c757d;
+        font-size: 0.85rem;
     }
 
     .progress-bar-container {
-        background: #e2e8f0;
-        height: 6px;
+        background: #e9ecef;
+        height: 5px;
         border-radius: 3px;
         overflow: hidden;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.4rem;
     }
 
     .progress-bar {
         height: 100%;
-        background: linear-gradient(90deg, #667eea, #764ba2);
+        background: #2c5aa0;
         border-radius: 3px;
         transition: width 1s ease-in-out;
     }
 
     .progress-text {
-        color: #718096;
-        font-size: 0.8rem;
+        color: #6c757d;
+        font-size: 0.75rem;
     }
 
     .continue-btn, .subject-btn {
-        width: 50px;
-        height: 50px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border-radius: 12px;
+        width: 45px;
+        height: 45px;
+        background: #2c5aa0;
+        border-radius: 6px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
         text-decoration: none;
-        transition: all 0.3s ease;
+        transition: background-color 0.2s ease;
     }
 
     .create-btn {
-        background: linear-gradient(135deg, #f093fb, #f5576c);
+        background: #dc3545;
     }
 
     .continue-btn:hover, .subject-btn:hover {
-        transform: scale(1.1);
+        background: #1e3d72;
+        color: white;
+    }
+
+    .create-btn:hover {
+        background: #c82333;
         color: white;
     }
 
     .streak-card {
-        background: linear-gradient(135deg, #ff6b6b, #ffa500);
+        background: #ffc107;
+        border-color: #ffca2c;
     }
 
     .streak-content {
-        padding: 1.5rem;
+        padding: 1.25rem;
         text-align: center;
-        color: white;
+        color: #212529;
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -496,43 +508,43 @@
     }
 
     .streak-icon {
-        font-size: 2rem;
+        font-size: 1.8rem;
         margin-bottom: 0.5rem;
     }
 
     .streak-number {
-        font-size: 2rem;
+        font-size: 1.8rem;
         font-weight: 700;
     }
 
     .streak-label {
-        font-size: 0.9rem;
-        opacity: 0.9;
+        font-size: 0.85rem;
+        font-weight: 500;
     }
 
     .tags {
         display: flex;
-        gap: 0.5rem;
+        gap: 0.4rem;
     }
 
     .tag {
-        background: #e2e8f0;
-        color: #4a5568;
-        padding: 0.25rem 0.75rem;
-        border-radius: 20px;
-        font-size: 0.8rem;
+        background: #e9ecef;
+        color: #495057;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
         font-weight: 500;
     }
 
     .create-tag {
-        background: linear-gradient(135deg, #f093fb, #f5576c);
+        background: #dc3545;
         color: white;
     }
 
     .progress-circle {
-        width: 50px;
-        height: 50px;
-        background: conic-gradient(#667eea 0deg 241deg, #e2e8f0 241deg 360deg);
+        width: 45px;
+        height: 45px;
+        background: conic-gradient(#2c5aa0 0deg 241deg, #e9ecef 241deg 360deg);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -542,8 +554,8 @@
 
     .progress-circle::before {
         content: '';
-        width: 35px;
-        height: 35px;
+        width: 32px;
+        height: 32px;
         background: white;
         border-radius: 50%;
         position: absolute;
@@ -552,29 +564,29 @@
     .progress-circle span {
         position: relative;
         z-index: 1;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         font-weight: 600;
-        color: #4a5568;
+        color: #495057;
     }
 
     .create-badge {
-        width: 50px;
-        height: 50px;
-        background: linear-gradient(135deg, #f093fb, #f5576c);
-        border-radius: 12px;
+        width: 45px;
+        height: 45px;
+        background: #dc3545;
+        border-radius: 6px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .calendar-card, .achievement-card, .activity-card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 16px;
-        padding: 1.5rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 1.25rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid #dee2e6;
     }
 
     .calendar-header {
@@ -586,7 +598,8 @@
 
     .calendar-month {
         font-weight: 600;
-        color: #2d3748;
+        color: #212529;
+        font-size: 0.95rem;
     }
 
     .calendar-nav {
@@ -596,62 +609,63 @@
 
     .calendar-nav i {
         cursor: pointer;
-        color: #718096;
-        transition: color 0.3s ease;
+        color: #6c757d;
+        transition: color 0.2s ease;
+        padding: 0.25rem;
     }
 
     .calendar-nav i:hover {
-        color: #4299e1;
+        color: #2c5aa0;
     }
 
     .calendar-grid {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 0.25rem;
+        gap: 0.2rem;
     }
 
     .calendar-day-header {
         text-align: center;
-        font-size: 0.8rem;
-        color: #718096;
+        font-size: 0.75rem;
+        color: #6c757d;
         font-weight: 600;
-        padding: 0.5rem;
+        padding: 0.4rem;
     }
 
     .calendar-day {
         text-align: center;
-        padding: 0.5rem;
-        border-radius: 8px;
+        padding: 0.4rem;
+        border-radius: 4px;
         cursor: pointer;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
+        transition: background-color 0.2s ease;
+        font-size: 0.85rem;
     }
 
     .calendar-day:hover {
-        background: #e2e8f0;
+        background: #f8f9fa;
     }
 
     .calendar-day.current {
-        background: #4299e1;
+        background: #2c5aa0;
         color: white;
     }
 
     .calendar-day.studied {
-        background: #48bb78;
+        background: #28a745;
         color: white;
     }
 
     .calendar-day.active {
-        background: #667eea;
+        background: #6c757d;
         color: white;
     }
 
     .achievement-item {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        padding: 1rem 0;
-        border-bottom: 1px solid #e2e8f0;
+        gap: 0.75rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f1f3f4;
     }
 
     .achievement-item:last-child {
@@ -659,14 +673,15 @@
     }
 
     .achievement-icon {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border-radius: 10px;
+        width: 35px;
+        height: 35px;
+        background: #2c5aa0;
+        border-radius: 6px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
+        font-size: 0.9rem;
     }
 
     .achievement-info {
@@ -674,14 +689,15 @@
     }
 
     .achievement-label {
-        font-size: 0.9rem;
-        color: #718096;
-        margin-bottom: 0.25rem;
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-bottom: 0.2rem;
     }
 
     .achievement-value {
         font-weight: 600;
-        color: #2d3748;
+        color: #212529;
+        font-size: 0.9rem;
     }
 
     .achievement-progress {
@@ -692,15 +708,15 @@
 
     .progress-bar-mini {
         flex: 1;
-        height: 4px;
-        background: #e2e8f0;
+        height: 3px;
+        background: #e9ecef;
         border-radius: 2px;
         overflow: hidden;
     }
 
     .progress-fill {
         height: 100%;
-        background: linear-gradient(90deg, #667eea, #764ba2);
+        background: #2c5aa0;
         border-radius: 2px;
         transition: width 1s ease-in-out;
     }
@@ -711,12 +727,12 @@
     }
 
     .badge-mini {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .activity-item {
-        padding: 0.75rem 0;
-        border-bottom: 1px solid #e2e8f0;
+        padding: 0.6rem 0;
+        border-bottom: 1px solid #f1f3f4;
     }
 
     .activity-item:last-child {
@@ -724,44 +740,44 @@
     }
 
     .activity-time {
-        font-size: 0.8rem;
-        color: #718096;
-        margin-bottom: 0.25rem;
+        font-size: 0.75rem;
+        color: #6c757d;
+        margin-bottom: 0.2rem;
     }
 
     .activity-desc {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        font-size: 0.9rem;
-        color: #2d3748;
+        font-size: 0.85rem;
+        color: #212529;
     }
 
-    .activity-desc i.success { color: #48bb78; }
-    .activity-desc i.warning { color: #ed8936; }
-    .activity-desc i.info { color: #4299e1; }
+    .activity-desc i.success { color: #28a745; }
+    .activity-desc i.warning { color: #ffc107; }
+    .activity-desc i.info { color: #17a2b8; }
 
     .user-info-card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 16px;
-        padding: 1.5rem;
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 1.25rem;
         display: flex;
         align-items: center;
         gap: 1rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid #dee2e6;
     }
 
     .user-avatar {
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        width: 50px;
+        height: 50px;
+        background: #6c757d;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     .user-details {
@@ -771,8 +787,8 @@
     }
 
     .user-level {
-        font-size: 0.9rem;
-        color: #718096;
+        font-size: 0.85rem;
+        color: #6c757d;
     }
 
     .user-exp {
@@ -783,56 +799,60 @@
     }
 
     .exp-bar {
-        height: 8px;
-        background: #e2e8f0;
-        border-radius: 4px;
+        height: 6px;
+        background: #e9ecef;
+        border-radius: 3px;
         overflow: hidden;
     }
 
     .exp-fill {
         height: 100%;
-        background: linear-gradient(90deg, #667eea, #764ba2);
-        border-radius: 4px;
+        background: #2c5aa0;
+        border-radius: 3px;
         transition: width 1s ease-in-out;
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
     }
 
     /* レスポンシブデザイン */
     @media (max-width: 768px) {
         .study-circle {
-            width: 250px;
-            height: 250px;
+            width: 170px;
+            height: 170px;
         }
         
         .progress-ring {
-            width: 250px;
-            height: 250px;
+            width: 170px;
+            height: 170px;
         }
         
         .progress-ring-bg, .progress-ring-progress {
-            cx: 125;
-            cy: 125;
-            r: 100;
+            cx: 85;
+            cy: 85;
+            r: 68;
         }
         
         .card-content, .subject-content {
             flex-direction: column;
             text-align: center;
+            gap: 0.75rem;
         }
         
         .user-info-card {
             flex-direction: column;
             text-align: center;
+        }
+
+        .system-dashboard {
+            padding: 1rem 0;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .welcome-card {
+            padding: 1rem;
+        }
+
+        .card-content, .subject-content {
+            padding: 1rem;
         }
     }
 </style>
