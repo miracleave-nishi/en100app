@@ -21,12 +21,14 @@
             <div class="container-fluid">
                 <div class="navbar-content">
                     <a class="system-brand" href="{% url 'mypage' %}">
-                        <div class="brand-icon">
-                            <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <div class="brand-text">
-                            <span class="brand-name">エン100アプリ</span>
-                            <span class="brand-subtitle">学習管理システム</span>
+                        <div class="app-logo-component size-small">
+                            <div class="logo-icon">
+                                <img src="{% static 'app_logo.PNG' %}" alt="Study app" class="logo-image">
+                            </div>
+                            <div class="logo-text">
+                                <span class="logo-brand-name">Study app</span>
+                                <span class="logo-subtitle">学習管理システム</span>
+                            </div>
                         </div>
                     </a>
                     
@@ -106,7 +108,7 @@
         <div class="container-fluid">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h6><i class="fas fa-info-circle me-2"></i>エン100アプリ</h6>
+                    <h6><i class="fas fa-info-circle me-2"></i>Study app</h6>
                     <p>効率的な学習をサポートします</p>
                 </div>
                 <div class="footer-section">
@@ -119,7 +121,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 エン100アプリ. All rights reserved.</p>
+                <p>&copy; 2024 Study app. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -165,33 +167,73 @@
         color: #2c5aa0;
     }
 
-    .brand-icon {
-        width: 40px;
-        height: 40px;
-        background: #2c5aa0;
-        border-radius: 4px;
+    /* 統一されたロゴコンポーネントスタイル */
+    .app-logo-component {
+        display: flex;
+        align-items: center;
+        gap: 0.875rem;
+    }
+
+    .logo-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
-        color: white;
+        overflow: hidden;
+        flex-shrink: 0;
     }
 
-    .brand-text {
+    .logo-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+
+    .logo-text {
         display: flex;
         flex-direction: column;
+        gap: 0.125rem;
     }
 
-    .brand-name {
-        font-size: 1.3rem;
-        font-weight: 600;
-        margin-bottom: 0.1rem;
+    .logo-brand-name {
         color: #212529;
+        font-weight: 700;
+        margin: 0;
+        font-size: 1.75rem;
+        line-height: 1.2;
     }
 
-    .brand-subtitle {
-        font-size: 0.8rem;
+    .logo-subtitle {
         color: #6c757d;
+        margin: 0;
+        font-size: 0.875rem;
+        line-height: 1.2;
+    }
+
+    /* サイズバリエーション */
+    .app-logo-component.size-small {
+        gap: 0.75rem;
+    }
+
+    .app-logo-component.size-small .logo-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+    }
+
+    .app-logo-component.size-small .logo-image {
+        border-radius: 4px;
+    }
+
+    .app-logo-component.size-small .logo-brand-name {
+        font-size: 1.3rem;
+    }
+
+    .app-logo-component.size-small .logo-subtitle {
+        font-size: 0.8rem;
     }
 
     .navbar-actions {

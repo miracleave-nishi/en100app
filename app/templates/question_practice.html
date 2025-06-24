@@ -35,9 +35,9 @@
 
             <!-- メインフォーム -->
             <form method="post" class="practice-form">
-                {% csrf_token %}
+    {% csrf_token %}
                 
-                {% for question in questions %}
+    {% for question in questions %}
                 <div class="question-card" data-question="{{ forloop.counter }}">
                     <div class="question-header">
                         <div class="question-number">
@@ -86,9 +86,9 @@
                             </div>
                         </div>
 
-                        {% if results %}
-                            {% for result in results %}
-                                {% if result.question.id == question.id %}
+        {% if results %}
+            {% for result in results %}
+                {% if result.question.id == question.id %}
                                     <div class="result-section">
                                         <div class="result-status {% if result.is_correct %}correct{% else %}incorrect{% endif %}">
                                             <i class="fas {% if result.is_correct %}fa-check-circle{% else %}fa-times-circle{% endif %}"></i>
@@ -102,12 +102,12 @@
                                             <p class="explanation-text">{{ result.question.explanation }}</p>
                                         </div>
                                     </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
                     </div>
-                </div>
-                {% endfor %}
+    </div>
+    {% endfor %}
 
                 <!-- 送信ボタンセクション -->
                 <div class="submit-section">
@@ -122,7 +122,7 @@
                         </a>
                     </div>
                 </div>
-            </form>
+</form>
         </div>
     </div>
 </div>

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}勉強アプリ（ロゴ）{% endblock %}
 {% block content %}
 
@@ -13,7 +14,11 @@
             <div class="welcome-section mb-4">
                 <div class="welcome-card">
                     <h3 class="welcome-title">
-                        <i class="fas fa-graduation-cap me-2"></i>
+                        <div class="app-logo-component inline">
+                            <div class="logo-icon">
+                                <img src="{% static 'app_logo.PNG' %}" alt="Study app" class="logo-image">
+                            </div>
+                        </div>
                         おかえりなさい！
                     </h3>
                     <p class="welcome-subtitle">今日も一緒に学習を頑張りましょう</p>
@@ -312,6 +317,69 @@
         font-weight: 600;
         margin-bottom: 0.5rem;
         font-size: 1.25rem;
+        display: flex;
+        align-items: center;
+    }
+
+    /* 統一されたロゴコンポーネントスタイル */
+    .app-logo-component {
+        display: flex;
+        align-items: center;
+        gap: 0.875rem;
+    }
+
+    .logo-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .logo-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+
+    .logo-text {
+        display: flex;
+        flex-direction: column;
+        gap: 0.125rem;
+    }
+
+    .logo-brand-name {
+        color: #212529;
+        font-weight: 700;
+        margin: 0;
+        font-size: 1.75rem;
+        line-height: 1.2;
+    }
+
+    .logo-subtitle {
+        color: #6c757d;
+        margin: 0;
+        font-size: 0.875rem;
+        line-height: 1.2;
+    }
+
+    /* インライン表示用（mypage.htmlのwelcome用） */
+    .app-logo-component.inline {
+        gap: 0.5rem;
+    }
+
+    .app-logo-component.inline .logo-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+    }
+
+    .app-logo-component.inline .logo-image {
+        border-radius: 4px;
     }
 
     .welcome-subtitle {
