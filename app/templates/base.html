@@ -7,49 +7,570 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="../static/reset.css" rel="stylesheet" type="text/css" media="all">
     <link href="../static/style.css" rel="stylesheet" type="text/css" media="all">
     <title>{% block title %}基本情報技術者試験問題集{% endblock %}</title>
 </head>
 
-<body>
-    <header>
+<body class="system-body">
+    <header class="system-header">
         {% comment %} ナビゲーションバー {% endcomment %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <nav class="system-navbar">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'mypage' %}">エン100アプリ</a>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <li class="ms-auto">
-                                <a class="nav-link" href="{% url 'logout' %}">ログアウト</a>
-                            </li>
-                        </li>
-                    </ul>
+                <div class="navbar-content">
+                    <a class="system-brand" href="{% url 'mypage' %}">
+                        <div class="app-logo-component size-small">
+                            <div class="logo-icon">
+                                <img src="{% static 'app_logo.PNG' %}" alt="Study app" class="logo-image">
+                            </div>
+                            <div class="logo-text">
+                                <span class="logo-brand-name">Study app</span>
+                                <span class="logo-subtitle">学習管理システム</span>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <div class="navbar-actions">
+                        <div class="user-menu">
+                            <div class="user-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">{{ request.user.username|default:"ゲスト" }}</span>
+                                <span class="user-status">オンライン</span>
+                            </div>
+                        </div>
+                        <div class="navbar-buttons">
+                            <a href="{% url 'question' %}" class="nav-btn primary">
+                                <i class="fas fa-play"></i>
+                                <span>学習開始</span>
+                            </a>
+                            <a href="{% url 'logout' %}" class="nav-btn secondary">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>ログアウト</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main>
+    <main class="system-main">
         {% comment %} パンくずリスト {% endcomment %}
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb bg-body-secondary px-3 py-2">
-                <li class="breadcrumb-item"><a class="text-decoration-none" href="{% url 'mypage' %}">ホーム</a></li>
-                {% block breadcrumb %}
-                <li class="breadcrumb-item active" aria-current="page"></li>
-                {% endblock %}
-            </ol>
+        <nav class="system-breadcrumb" aria-label="breadcrumb">
+            <div class="container-fluid">
+                <div class="breadcrumb-container">
+                    <div class="breadcrumb-path">
+                        <a href="{% url 'mypage' %}" class="breadcrumb-link home">
+                            <i class="fas fa-home"></i>
+                            <span>ホーム</span>
+                        </a>
+                        {% block breadcrumb %}
+                        {% endblock %}
+                    </div>
+                    <div class="breadcrumb-actions">
+                        <div class="progress-indicator">
+                            <div class="progress-ring-mini">
+                                <svg width="40" height="40">
+                                    <circle class="progress-ring-bg-mini" cx="20" cy="20" r="16" />
+                                    <circle class="progress-ring-progress-mini" cx="20" cy="20" r="16" 
+                                            style="stroke-dasharray: 100; stroke-dashoffset: 25;" />
+                                </svg>
+                                <span class="progress-text-mini">75%</span>
+                            </div>
+                        </div>
+                        <div class="study-streak">
+                            <i class="fas fa-fire"></i>
+                            <span>7日</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </nav>
 
-        {% block content %}
-        リンク1
-        {% endblock %}
+        <div class="content-wrapper">
+            {% block content %}
+            <div class="default-content">
+                <div class="welcome-message">
+                    <i class="fas fa-rocket"></i>
+                    <h2>学習を始めましょう！</h2>
+                    <p>今日も一緒に頑張りましょう</p>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <footer>
-
+    
+    <footer class="system-footer">
+        <div class="container-fluid">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h6><i class="fas fa-info-circle me-2"></i>Study app</h6>
+                    <p>効率的な学習をサポートします</p>
+                </div>
+                <div class="footer-section">
+                    <h6><i class="fas fa-chart-line me-2"></i>学習統計</h6>
+                    <p>今月の学習時間: 24時間</p>
+                </div>
+                <div class="footer-section">
+                    <h6><i class="fas fa-trophy me-2"></i>実績</h6>
+                    <p>獲得バッジ: 12個</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Study app. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
+<style>
+    .system-body {
+        background: #f8f9fa;
+        min-height: 100vh;
+        font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: #212529;
+    }
+
+    .system-header {
+        background: #ffffff;
+        border-bottom: 1px solid #dee2e6;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .system-navbar {
+        padding: 0.75rem 0;
+    }
+
+    .navbar-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+
+    .system-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: #495057;
+        transition: color 0.2s ease;
+    }
+
+    .system-brand:hover {
+        color: #2c5aa0;
+    }
+
+    /* 統一されたロゴコンポーネントスタイル */
+    .app-logo-component {
+        display: flex;
+        align-items: center;
+        gap: 0.875rem;
+    }
+
+    .logo-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .logo-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+
+    .logo-text {
+        display: flex;
+        flex-direction: column;
+        gap: 0.125rem;
+    }
+
+    .logo-brand-name {
+        color: #212529;
+        font-weight: 700;
+        margin: 0;
+        font-size: 1.75rem;
+        line-height: 1.2;
+    }
+
+    .logo-subtitle {
+        color: #6c757d;
+        margin: 0;
+        font-size: 0.875rem;
+        line-height: 1.2;
+    }
+
+    /* サイズバリエーション */
+    .app-logo-component.size-small {
+        gap: 0.75rem;
+    }
+
+    .app-logo-component.size-small .logo-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 4px;
+    }
+
+    .app-logo-component.size-small .logo-image {
+        border-radius: 4px;
+    }
+
+    .app-logo-component.size-small .logo-brand-name {
+        font-size: 1.3rem;
+    }
+
+    .app-logo-component.size-small .logo-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .navbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: #f8f9fa;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        border: 1px solid #dee2e6;
+    }
+
+    .user-avatar {
+        width: 32px;
+        height: 32px;
+        background: #6c757d;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.9rem;
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user-name {
+        font-weight: 500;
+        font-size: 0.85rem;
+        color: #212529;
+        line-height: 1.2;
+    }
+
+    .user-status {
+        font-size: 0.75rem;
+        color: #28a745;
+        line-height: 1.2;
+    }
+
+    .navbar-buttons {
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .nav-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.85rem;
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
+    }
+
+    .nav-btn.primary {
+        background: #0d6efd;
+        color: white;
+        border-color: #0d6efd;
+    }
+
+    .nav-btn.primary:hover {
+        background: #0b5ed7;
+        border-color: #0a58ca;
+        color: white;
+    }
+
+    .nav-btn.secondary {
+        background: #6c757d;
+        color: white;
+        border-color: #6c757d;
+    }
+
+    .nav-btn.secondary:hover {
+        background: #5c636a;
+        border-color: #565e64;
+        color: white;
+    }
+
+    .system-main {
+        flex: 1;
+        padding-bottom: 2rem;
+    }
+
+    .system-breadcrumb {
+        background: #ffffff;
+        border-bottom: 1px solid #dee2e6;
+        padding: 0.75rem 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .breadcrumb-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .breadcrumb-path {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .breadcrumb-link {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: #6c757d;
+        text-decoration: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        font-weight: 400;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumb-link:hover {
+        background: #f8f9fa;
+        color: #495057;
+    }
+
+    .breadcrumb-link.home {
+        background: #e9ecef;
+        color: #495057;
+        font-weight: 500;
+    }
+
+    .breadcrumb-link.current {
+        background: #2c5aa0;
+        color: white;
+        font-weight: 500;
+    }
+
+    .breadcrumb-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .progress-indicator {
+        position: relative;
+    }
+
+    .progress-ring-mini {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .progress-ring-bg-mini {
+        fill: none;
+        stroke: #dee2e6;
+        stroke-width: 3;
+    }
+
+    .progress-ring-progress-mini {
+        fill: none;
+        stroke: #28a745;
+        stroke-width: 3;
+        stroke-linecap: round;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+    }
+
+    .progress-text-mini {
+        position: absolute;
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .study-streak {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: #ffc107;
+        color: #212529;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 0.85rem;
+        border: 1px solid #ffca2c;
+    }
+
+    .content-wrapper {
+        min-height: calc(100vh - 200px);
+        padding: 0 15px;
+    }
+
+    .default-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50vh;
+    }
+
+    .welcome-message {
+        text-align: center;
+        color: #495057;
+        background: #ffffff;
+        padding: 3rem;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        max-width: 500px;
+    }
+
+    .welcome-message i {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #2c5aa0;
+    }
+
+    .welcome-message h2 {
+        margin-bottom: 1rem;
+        font-weight: 600;
+        color: #212529;
+    }
+
+    .welcome-message p {
+        color: #6c757d;
+        margin: 0;
+    }
+
+    .system-footer {
+        background: #ffffff;
+        border-top: 1px solid #dee2e6;
+        color: #495057;
+        padding: 1.5rem 0 1rem;
+        margin-top: auto;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-section h6 {
+        color: #2c5aa0;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .footer-section p {
+        color: #6c757d;
+        margin: 0;
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding-top: 1rem;
+        border-top: 1px solid #dee2e6;
+        color: #6c757d;
+        font-size: 0.8rem;
+    }
+
+    /* レスポンシブデザイン */
+    @media (max-width: 768px) {
+        .navbar-content {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .navbar-actions {
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .user-menu {
+            order: 2;
+        }
+
+        .navbar-buttons {
+            order: 1;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .breadcrumb-container {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .breadcrumb-actions {
+            order: -1;
+        }
+
+        .footer-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .brand-text {
+            display: none;
+        }
+
+        .welcome-message {
+            padding: 2rem;
+            margin: 0 1rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .nav-btn span {
+            display: none;
+        }
+        
+        .user-info {
+            display: none;
+        }
+
+        .system-navbar {
+            padding: 0.5rem 0;
+        }
+
+        .welcome-message {
+            padding: 1.5rem;
+        }
+    }
+</style>
 
 </html>
