@@ -1,7 +1,8 @@
 from django.contrib import admin
 from basic_information.users.models import CustomUser
 from basic_information.questions.models import Category, Question, Answer
-from basic_information.models import UserStamp, Stamp, Ranking
+from basic_information.stamp.models import UserStamp, Stamp
+from basic_information.models import Ranking
 
 # Register your models here.
 

@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "basic_information.users",
     "basic_information.questions",
     "basic_information.mypage",
+    "basic_information.stamp",
 ]
 
 MIDDLEWARE = [
