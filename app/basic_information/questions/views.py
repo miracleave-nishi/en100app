@@ -1,6 +1,8 @@
 from django.views.generic.edit import CreateView
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from basic_information.questions.models import Question
 from basic_information.questions.forms import QuestionForm
 
@@ -35,7 +37,7 @@ class QuestionListView(TemplateView):
         return self.render_to_response(context)
 
 
-class QuestionCreateView(TemplateView):
+class QuestionCreateView(LoginRequiredMixin, TemplateView):
     template_name = "questions/create/index.html"
     success_url = reverse_lazy("question_create")
 
@@ -47,11 +49,17 @@ class QuestionCreateView(TemplateView):
     def post(self, request, *args, **kwargs):
         form = QuestionForm(request.POST)
         if form.is_valid():
-            form.save()
-            # 成功時は空フォーム＋完了メッセージを表示
+            question = form.save(commit=False)
+            question.created_by = request.user  # 作成者を設定
+            question.save()
+
+            messages.success(
+                request, f"問題「{question.title}」が正常に登録されました。"
+            )
+
+            # 成功時は空フォームを表示
             context = self.get_context_data(**kwargs)
             context["form"] = QuestionForm()
-            context["success"] = True
             return self.render_to_response(context)
         else:
             context = self.get_context_data(**kwargs)

@@ -3,6 +3,17 @@ from basic_information.questions.models import Question
 
 
 class QuestionForm(forms.ModelForm):
+    correct_answer = forms.ChoiceField(
+        choices=[
+            ("1", "選択肢1 (ア)"),
+            ("2", "選択肢2 (イ)"),
+            ("3", "選択肢3 (ウ)"),
+            ("4", "選択肢4 (エ)"),
+        ],
+        widget=forms.HiddenInput,  # 非表示フィールドとして設定
+        required=True,
+    )
+
     class Meta:
         model = Question
         fields = [
@@ -23,3 +34,10 @@ class QuestionForm(forms.ModelForm):
             "option_3": forms.TextInput(attrs={"placeholder": "選択肢C"}),
             "option_4": forms.TextInput(attrs={"placeholder": "選択肢D"}),
         }
+
+    def save(self, commit=True):
+        question = super().save(commit=False)
+        question.correct_option = int(self.cleaned_data["correct_answer"])
+        if commit:
+            question.save()
+        return question

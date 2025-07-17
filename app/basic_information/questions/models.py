@@ -24,6 +24,9 @@ class Question(models.Model):
     title = models.CharField(max_length=255)  # 問題タイトル
     content = models.TextField()  # 問題内容
     category = models.ForeignKey(Category, on_delete=models.CASCADE)  # 外部キー
+    created_by = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, null=True, blank=True
+    )  # 作成者
     created_at = models.DateTimeField(auto_now_add=True)  # 作成日
     updated_at = models.DateTimeField(auto_now=True)  # 更新日
     option_1 = models.CharField(max_length=255)  # 選択肢1

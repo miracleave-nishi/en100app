@@ -7,6 +7,18 @@
 {% endblock %}
 {% block content %}
 
+<!-- メッセージ表示 -->
+{% if messages %}
+<div class="messages-container">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
 <div class="container-fluid create-container">
     <div class="row">
         <div class="col-lg-10 mx-auto">
@@ -107,34 +119,62 @@
                             <div class="card-body">
                                 <div class="choices-container">
                                     <div class="choice-group mb-3">
-                                        <label for="{{ form.option_1.id_for_label }}" class="choice-label">
-                                            <span class="choice-marker">ア</span>
-                                            選択肢 1
-                                        </label>
+                                        <div class="choice-header">
+                                            <label for="{{ form.option_1.id_for_label }}" class="choice-label">
+                                                <span class="choice-marker">ア</span>
+                                                選択肢 1
+                                            </label>
+                                            <label class="correct-radio">
+                                                <input type="radio" name="correct_answer" value="1" class="correct-input">
+                                                <span class="radio-custom"></span>
+                                                正解
+                                            </label>
+                                        </div>
                                         {{ form.option_1 }}
                                     </div>
                                     
                                     <div class="choice-group mb-3">
-                                        <label for="{{ form.option_2.id_for_label }}" class="choice-label">
-                                            <span class="choice-marker">イ</span>
-                                            選択肢 2
-                                        </label>
+                                        <div class="choice-header">
+                                            <label for="{{ form.option_2.id_for_label }}" class="choice-label">
+                                                <span class="choice-marker">イ</span>
+                                                選択肢 2
+                                            </label>
+                                            <label class="correct-radio">
+                                                <input type="radio" name="correct_answer" value="2" class="correct-input">
+                                                <span class="radio-custom"></span>
+                                                正解
+                                            </label>
+                                        </div>
                                         {{ form.option_2 }}
                                     </div>
                                     
                                     <div class="choice-group mb-3">
-                                        <label for="{{ form.option_3.id_for_label }}" class="choice-label">
-                                            <span class="choice-marker">ウ</span>
-                                            選択肢 3
-                                        </label>
+                                        <div class="choice-header">
+                                            <label for="{{ form.option_3.id_for_label }}" class="choice-label">
+                                                <span class="choice-marker">ウ</span>
+                                                選択肢 3
+                                            </label>
+                                            <label class="correct-radio">
+                                                <input type="radio" name="correct_answer" value="3" class="correct-input">
+                                                <span class="radio-custom"></span>
+                                                正解
+                                            </label>
+                                        </div>
                                         {{ form.option_3 }}
                                     </div>
                                     
                                     <div class="choice-group mb-3">
-                                        <label for="{{ form.option_4.id_for_label }}" class="choice-label">
-                                            <span class="choice-marker">エ</span>
-                                            選択肢 4
-                                        </label>
+                                        <div class="choice-header">
+                                            <label for="{{ form.option_4.id_for_label }}" class="choice-label">
+                                                <span class="choice-marker">エ</span>
+                                                選択肢 4
+                                            </label>
+                                            <label class="correct-radio">
+                                                <input type="radio" name="correct_answer" value="4" class="correct-input">
+                                                <span class="radio-custom"></span>
+                                                正解
+                                            </label>
+                                        </div>
                                         {{ form.option_4 }}
                                     </div>
                                 </div>
@@ -235,6 +275,34 @@
 </div>
 
 <style>
+    .messages-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050;
+        max-width: 400px;
+    }
+
+    .alert {
+        border-radius: 8px;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 0.5rem;
+        transition: opacity 0.5s ease-out;
+    }
+
+    .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border-left: 4px solid #28a745;
+    }
+
+    .alert-danger {
+        background: #f8d7da;
+        color: #721c24;
+        border-left: 4px solid #dc3545;
+    }
+
     .create-container {
         background: #f8f9fa;
         min-height: 100vh;
@@ -373,14 +441,73 @@
         position: relative;
     }
 
+    .choice-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
     .choice-label {
         display: flex;
         align-items: center;
         gap: 0.5rem;
         font-weight: 600;
         color: #495057;
-        margin-bottom: 0.5rem;
         font-size: 0.9rem;
+        margin: 0;
+    }
+
+    .correct-radio {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        font-size: 0.8rem;
+        color: #28a745;
+        font-weight: 500;
+    }
+
+    .correct-input {
+        display: none;
+    }
+
+    .correct-radio .radio-custom {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #e9ecef;
+        border-radius: 50%;
+        position: relative;
+        transition: border-color 0.2s ease;
+        background: #ffffff;
+    }
+
+    .correct-radio input[type="radio"]:checked + .radio-custom {
+        border-color: #28a745;
+        background: #28a745;
+    }
+
+    .correct-radio input[type="radio"]:checked + .radio-custom::after {
+        content: '';
+        width: 6px;
+        height: 6px;
+        background: #ffffff;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .choice-group.correct-selected {
+        border: 2px solid #28a745;
+        border-radius: 6px;
+        padding: 0.5rem;
+        background: rgba(40, 167, 69, 0.05);
+    }
+
+    .choice-group.correct-selected .choice-marker {
+        background: #28a745;
     }
 
     .choice-marker {
@@ -531,6 +658,73 @@
         cursor: pointer;
     }
 
+    /* プレビュー用スタイル */
+    .question-preview {
+        padding: 1rem;
+    }
+
+    .question-preview h5 {
+        color: #495057;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .question-text {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+
+    .options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .option {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        background: #ffffff;
+    }
+
+    .option.correct {
+        border-color: #28a745;
+        background: rgba(40, 167, 69, 0.05);
+    }
+
+    .marker {
+        background: #2c5aa0;
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .option.correct .marker {
+        background: #28a745;
+    }
+
+    .correct-badge {
+        background: #28a745;
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-left: auto;
+    }
+
     /* レスポンシブデザイン */
     @media (max-width: 768px) {
         .header-content {
@@ -580,10 +774,22 @@
 </style>
 
 <script>
-    // 文字数カウント機能
-    document.addEventListener('DOMContentLoaded', function() {
-        const contentField = document.querySelector('textarea[name="content"]');
-        const countElement = document.getElementById('content-count');
+            // 文字数カウント機能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 成功メッセージの自動消去
+            const successMessages = document.querySelectorAll('.alert-success');
+            successMessages.forEach(function(message) {
+                setTimeout(function() {
+                    message.style.transition = 'opacity 0.5s ease-out';
+                    message.style.opacity = '0';
+                    setTimeout(function() {
+                        message.remove();
+                    }, 500);
+                }, 3000);
+            });
+
+            const contentField = document.querySelector('textarea[name="content"]');
+            const countElement = document.getElementById('content-count');
         
         if (contentField && countElement) {
             function updateCount() {
@@ -603,6 +809,65 @@
             updateCount(); // 初期値設定
         }
         
+        // 正解選択肢の視覚的フィードバック
+        const correctInputs = document.querySelectorAll('.correct-input');
+        correctInputs.forEach(function(input) {
+            input.addEventListener('change', function() {
+                updateCorrectSelection(this);
+            });
+            
+            // ラジオボタンのラベルクリック時も処理
+            const radioLabel = input.nextElementSibling;
+            if (radioLabel) {
+                radioLabel.addEventListener('click', function() {
+                    updateCorrectSelection(input);
+                });
+            }
+        });
+        
+        function updateCorrectSelection(selectedInput) {
+            // すべてのラジオボタンのチェックを外す
+            correctInputs.forEach(function(radio) {
+                radio.checked = false;
+            });
+            
+            // すべての選択肢グループから正解マークを削除
+            document.querySelectorAll('.choice-group').forEach(function(group) {
+                group.classList.remove('correct-selected');
+            });
+            
+            // 選択されたラジオボタンをチェック
+            selectedInput.checked = true;
+            
+            // 選択された選択肢グループに正解マークを追加
+            selectedInput.closest('.choice-group').classList.add('correct-selected');
+            
+            // 隠しフィールドに正解の値を設定
+            const hiddenField = document.querySelector('input[name="correct_answer"]');
+            if (hiddenField) {
+                hiddenField.value = selectedInput.value;
+            }
+        }
+
+        // フォーム送信時のバリデーション
+        const form = document.querySelector('.create-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const correctAnswer = document.querySelector('input[name="correct_answer"]:checked');
+                if (!correctAnswer) {
+                    e.preventDefault();
+                    alert('正解の選択肢を選択してください。');
+                    return false;
+                }
+                
+                // 隠しフィールドに正解の値を設定
+                const hiddenField = document.querySelector('input[name="correct_answer"]');
+                if (hiddenField) {
+                    hiddenField.value = correctAnswer.value;
+                }
+            });
+        }
+
         // プレビュー機能
         const previewBtn = document.querySelector('.btn-preview');
         if (previewBtn) {
@@ -614,15 +879,30 @@
                 const option3 = document.querySelector('input[name="option_3"]').value;
                 const option4 = document.querySelector('input[name="option_4"]').value;
                 
+                const correctAnswer = document.querySelector('input[name="correct_answer"]:checked');
+                const correctValue = correctAnswer ? correctAnswer.value : null;
+                
                 const previewContent = `
                     <div class="question-preview">
                         <h5>${title || '（タイトル未入力）'}</h5>
                         <p class="question-text">${content || '（問題文未入力）'}</p>
                         <div class="options">
-                            <div class="option"><span class="marker">ア</span> ${option1 || '（選択肢未入力）'}</div>
-                            <div class="option"><span class="marker">イ</span> ${option2 || '（選択肢未入力）'}</div>
-                            <div class="option"><span class="marker">ウ</span> ${option3 || '（選択肢未入力）'}</div>
-                            <div class="option"><span class="marker">エ</span> ${option4 || '（選択肢未入力）'}</div>
+                            <div class="option ${correctValue === '1' ? 'correct' : ''}">
+                                <span class="marker">ア</span> ${option1 || '（選択肢未入力）'}
+                                ${correctValue === '1' ? '<span class="correct-badge">正解</span>' : ''}
+                            </div>
+                            <div class="option ${correctValue === '2' ? 'correct' : ''}">
+                                <span class="marker">イ</span> ${option2 || '（選択肢未入力）'}
+                                ${correctValue === '2' ? '<span class="correct-badge">正解</span>' : ''}
+                            </div>
+                            <div class="option ${correctValue === '3' ? 'correct' : ''}">
+                                <span class="marker">ウ</span> ${option3 || '（選択肢未入力）'}
+                                ${correctValue === '3' ? '<span class="correct-badge">正解</span>' : ''}
+                            </div>
+                            <div class="option ${correctValue === '4' ? 'correct' : ''}">
+                                <span class="marker">エ</span> ${option4 || '（選択肢未入力）'}
+                                ${correctValue === '4' ? '<span class="correct-badge">正解</span>' : ''}
+                            </div>
                         </div>
                     </div>
                 `;
