@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.views import LoginView
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
-from .forms import CustomUserCreationForm, QuestionForm
+from .forms import QuestionForm
 from django.contrib.auth.decorators import login_required
 from .models import Question
 
@@ -13,27 +13,9 @@ def test(request):
     return HttpResponse(test_message)
 
 
-def login(request):
-    return render(request, "login.html")
-
-
 @login_required
 def mypage(request):
     return render(request, "mypage.html")
-
-
-class LoginView(LoginView):
-    feild = "__all__"
-    template_name = "login.html"
-
-    def get_success_url(self):
-        return reverse_lazy("mypage")
-
-
-class SignUpView(CreateView):
-    form_class = CustomUserCreationForm
-    success_url = reverse_lazy("login")  # ログインページ等、リダイレクト先を指定
-    template_name = "signup.html"
 
 
 class QuestionCreateView(CreateView):
