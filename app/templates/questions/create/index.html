@@ -1,0 +1,640 @@
+{% extends "base.html" %}
+{% block breadcrumb %}
+<a href="{% url 'question_create' %}" class="breadcrumb-link">
+    <i class="fas fa-plus-circle"></i>
+    <span>問題作成</span>
+</a>
+{% endblock %}
+{% block content %}
+
+<div class="container-fluid create-container">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <!-- ヘッダーセクション -->
+            <div class="create-header mb-4">
+                <div class="header-content">
+                    <div class="header-info">
+                        <h2 class="create-title">
+                            <i class="fas fa-edit me-2"></i>
+                            オリジナル問題作成
+                        </h2>
+                        <p class="create-subtitle">基本情報技術者試験対策用の問題を作成できます</p>
+                    </div>
+                    <div class="header-actions">
+                        <div class="save-status">
+                            <i class="fas fa-circle text-success me-1"></i>
+                            <span>自動保存対応</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- メインフォーム -->
+            <form method="post" class="create-form">
+                {% csrf_token %}
+                
+                <div class="row g-4">
+                    <!-- 左側: 問題情報 -->
+                    <div class="col-lg-6">
+                        <!-- 問題基本情報カード -->
+                        <div class="form-card mb-4">
+                            <div class="card-header">
+                                <h5 class="card-title">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    問題基本情報
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.title.id_for_label }}" class="form-label required">
+                                        <i class="fas fa-heading me-1"></i>
+                                        問題タイトル
+                                    </label>
+                                    {{ form.title }}
+                                    <div class="form-help">
+                                        問題の内容が分かりやすいタイトルを入力してください
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group mb-3">
+                                    <label for="{{ form.category.id_for_label }}" class="form-label required">
+                                        <i class="fas fa-tag me-1"></i>
+                                        カテゴリ
+                                    </label>
+                                    {{ form.category }}
+                                    <div class="form-help">
+                                        問題の分野を選択してください
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 問題文カード -->
+                        <div class="form-card">
+                            <div class="card-header">
+                                <h5 class="card-title">
+                                    <i class="fas fa-file-text me-2"></i>
+                                    問題文
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="{{ form.content.id_for_label }}" class="form-label required">
+                                        問題の内容
+                                    </label>
+                                    {{ form.content }}
+                                    <div class="form-help">
+                                        具体的で分かりやすい問題文を記述してください。図表が必要な場合は [図1] のように表記してください。
+                                    </div>
+                                    <div class="character-count">
+                                        <span id="content-count">0</span> / 1000文字
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右側: 選択肢と設定 -->
+                    <div class="col-lg-6">
+                        <!-- 選択肢カード -->
+                        <div class="form-card mb-4">
+                            <div class="card-header">
+                                <h5 class="card-title">
+                                    <i class="fas fa-list me-2"></i>
+                                    選択肢設定
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="choices-container">
+                                    <div class="choice-group mb-3">
+                                        <label for="{{ form.option_1.id_for_label }}" class="choice-label">
+                                            <span class="choice-marker">ア</span>
+                                            選択肢 1
+                                        </label>
+                                        {{ form.option_1 }}
+                                    </div>
+                                    
+                                    <div class="choice-group mb-3">
+                                        <label for="{{ form.option_2.id_for_label }}" class="choice-label">
+                                            <span class="choice-marker">イ</span>
+                                            選択肢 2
+                                        </label>
+                                        {{ form.option_2 }}
+                                    </div>
+                                    
+                                    <div class="choice-group mb-3">
+                                        <label for="{{ form.option_3.id_for_label }}" class="choice-label">
+                                            <span class="choice-marker">ウ</span>
+                                            選択肢 3
+                                        </label>
+                                        {{ form.option_3 }}
+                                    </div>
+                                    
+                                    <div class="choice-group mb-3">
+                                        <label for="{{ form.option_4.id_for_label }}" class="choice-label">
+                                            <span class="choice-marker">エ</span>
+                                            選択肢 4
+                                        </label>
+                                        {{ form.option_4 }}
+                                    </div>
+                                </div>
+                                
+                                <div class="form-help mt-3">
+                                    <i class="fas fa-lightbulb me-1"></i>
+                                    正解は1つ、不正解は3つ作成してください。選択肢は具体的で紛らわしくないように作成することが重要です。
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 設定・プレビューカード -->
+                        <div class="form-card">
+                            <div class="card-header">
+                                <h5 class="card-title">
+                                    <i class="fas fa-cog me-2"></i>
+                                    その他設定
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group mb-3">
+                                    <label class="form-label">
+                                        <i class="fas fa-star me-1"></i>
+                                        難易度
+                                    </label>
+                                    <select class="form-control" name="difficulty">
+                                        <option value="1">初級</option>
+                                        <option value="2" selected>中級</option>
+                                        <option value="3">上級</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="fas fa-eye me-1"></i>
+                                        公開設定
+                                    </label>
+                                    <div class="radio-group">
+                                        <label class="radio-option">
+                                            <input type="radio" name="visibility" value="private" checked>
+                                            <span class="radio-custom"></span>
+                                            非公開（自分のみ）
+                                        </label>
+                                        <label class="radio-option">
+                                            <input type="radio" name="visibility" value="public">
+                                            <span class="radio-custom"></span>
+                                            公開（全ユーザー）
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- アクションボタン -->
+                <div class="action-section">
+                    <div class="action-buttons">
+                        <button type="button" class="btn-preview">
+                            <i class="fas fa-eye me-2"></i>
+                            プレビュー
+                        </button>
+                        <div class="primary-actions">
+                            <button type="submit" name="action" value="publish" class="btn-submit">
+                                <i class="fas fa-check me-2"></i>
+                                問題を登録
+                            </button>
+                        </div>
+                    </div>
+                    <div class="navigation-actions">
+                        <a href="{% url 'mypage' %}" class="btn-back">
+                            <i class="fas fa-arrow-left me-2"></i>
+                            マイページに戻る
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- プレビューモーダル -->
+<div class="modal fade" id="previewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-eye me-2"></i>
+                    問題プレビュー
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="previewContent">
+                <!-- プレビュー内容がここに動的に挿入されます -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .create-container {
+        background: #f8f9fa;
+        min-height: 100vh;
+        padding: 1.5rem 0;
+    }
+
+    .create-header {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid #dee2e6;
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .create-title {
+        color: #212529;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        font-size: 1.5rem;
+    }
+
+    .create-subtitle {
+        color: #6c757d;
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .save-status {
+        display: flex;
+        align-items: center;
+        color: #28a745;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .create-form {
+        margin-top: 1.5rem;
+    }
+
+    .form-card {
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid #dee2e6;
+        overflow: hidden;
+    }
+
+    .card-header {
+        background: #f8f9fa;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .card-title {
+        color: #495057;
+        font-weight: 600;
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-label {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .form-label.required::after {
+        content: "*";
+        color: #dc3545;
+        margin-left: 0.25rem;
+    }
+
+    .form-control, input[type="text"], textarea, select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        transition: border-color 0.2s ease;
+        background: #ffffff;
+        color: #212529;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus, input[type="text"]:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: #2c5aa0;
+        box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.25);
+    }
+
+    textarea {
+        min-height: 200px;
+        resize: vertical;
+        font-family: inherit;
+        line-height: 1.5;
+    }
+
+    .form-help {
+        font-size: 0.8rem;
+        color: #6c757d;
+        margin-top: 0.25rem;
+        line-height: 1.4;
+    }
+
+    .character-count {
+        text-align: right;
+        font-size: 0.8rem;
+        color: #6c757d;
+        margin-top: 0.5rem;
+    }
+
+    .choices-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .choice-group {
+        position: relative;
+    }
+
+    .choice-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .choice-marker {
+        background: #2c5aa0;
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .radio-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .radio-option {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: #495057;
+    }
+
+    .radio-option input[type="radio"] {
+        display: none;
+    }
+
+    .radio-custom {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #e9ecef;
+        border-radius: 50%;
+        position: relative;
+        transition: border-color 0.2s ease;
+    }
+
+    .radio-option input[type="radio"]:checked + .radio-custom {
+        border-color: #2c5aa0;
+    }
+
+    .radio-option input[type="radio"]:checked + .radio-custom::after {
+        content: '';
+        width: 8px;
+        height: 8px;
+        background: #2c5aa0;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .action-section {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid #dee2e6;
+        margin-top: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .action-buttons {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .primary-actions {
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .btn-preview, .btn-draft, .btn-submit, .btn-back {
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        border: none;
+    }
+
+    .btn-preview {
+        background: #6c757d;
+        color: white;
+    }
+
+    .btn-preview:hover {
+        background: #5a6268;
+    }
+
+    .btn-draft {
+        background: #ffc107;
+        color: #212529;
+    }
+
+    .btn-draft:hover {
+        background: #e0a800;
+    }
+
+    .btn-submit {
+        background: #2c5aa0;
+        color: white;
+    }
+
+    .btn-submit:hover {
+        background: #1e3d72;
+    }
+
+    .btn-back {
+        background: #e9ecef;
+        color: #495057;
+    }
+
+    .btn-back:hover {
+        background: #d6dbdf;
+        color: #495057;
+    }
+
+    /* モーダルスタイル */
+    .modal-header {
+        background: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .modal-title {
+        color: #495057;
+        font-weight: 600;
+    }
+
+    .btn-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    /* レスポンシブデザイン */
+    @media (max-width: 768px) {
+        .header-content {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .action-section {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .primary-actions {
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .btn-preview, .btn-draft, .btn-submit, .btn-back {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .card-body {
+            padding: 1rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .create-container {
+            padding: 1rem 0;
+        }
+
+        .create-header, .card-body {
+            padding: 1rem;
+        }
+
+        textarea {
+            min-height: 150px;
+        }
+    }
+</style>
+
+<script>
+    // 文字数カウント機能
+    document.addEventListener('DOMContentLoaded', function() {
+        const contentField = document.querySelector('textarea[name="content"]');
+        const countElement = document.getElementById('content-count');
+        
+        if (contentField && countElement) {
+            function updateCount() {
+                const count = contentField.value.length;
+                countElement.textContent = count;
+                
+                if (count > 800) {
+                    countElement.style.color = '#dc3545';
+                } else if (count > 600) {
+                    countElement.style.color = '#ffc107';
+                } else {
+                    countElement.style.color = '#6c757d';
+                }
+            }
+            
+            contentField.addEventListener('input', updateCount);
+            updateCount(); // 初期値設定
+        }
+        
+        // プレビュー機能
+        const previewBtn = document.querySelector('.btn-preview');
+        if (previewBtn) {
+            previewBtn.addEventListener('click', function() {
+                const title = document.querySelector('input[name="title"]').value;
+                const content = document.querySelector('textarea[name="content"]').value;
+                const option1 = document.querySelector('input[name="option_1"]').value;
+                const option2 = document.querySelector('input[name="option_2"]').value;
+                const option3 = document.querySelector('input[name="option_3"]').value;
+                const option4 = document.querySelector('input[name="option_4"]').value;
+                
+                const previewContent = `
+                    <div class="question-preview">
+                        <h5>${title || '（タイトル未入力）'}</h5>
+                        <p class="question-text">${content || '（問題文未入力）'}</p>
+                        <div class="options">
+                            <div class="option"><span class="marker">ア</span> ${option1 || '（選択肢未入力）'}</div>
+                            <div class="option"><span class="marker">イ</span> ${option2 || '（選択肢未入力）'}</div>
+                            <div class="option"><span class="marker">ウ</span> ${option3 || '（選択肢未入力）'}</div>
+                            <div class="option"><span class="marker">エ</span> ${option4 || '（選択肢未入力）'}</div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('previewContent').innerHTML = previewContent;
+                
+                // モーダルを表示（Bootstrap 5の場合）
+                const modal = new bootstrap.Modal(document.getElementById('previewModal'));
+                modal.show();
+            });
+        }
+    });
+</script>
+
+{% endblock %}

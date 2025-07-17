@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "basic_information",
     "basic_information.users",
+    "basic_information.questions",
 ]
 
 MIDDLEWARE = [
