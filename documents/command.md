@@ -15,7 +15,12 @@ docker-compose -f docker-compose.dev.yml exec app python manage.py migrate
 
 ### Categoryテーブルに初期データ投入
 ```bash
-docker-compose -f docker-compose.dev.yml exec app python manage.py loaddata basic_information/questions/fixtures/category.json
+docker-compose -f docker-compose.dev.yml exec app python manage.py loaddata basic_information/questions/fixtures/categories.json
+```
+
+### Questionテーブルに初期データ投入
+```bash
+docker-compose -f docker-compose.dev.yml exec app python manage.py loaddata basic_information/questions/fixtures/questions.json
 ```
 
 ### スーパーユーザーを登録
