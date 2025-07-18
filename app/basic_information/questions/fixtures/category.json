@@ -1,0 +1,46 @@
+[
+  {
+    "model": "questions.category",
+    "pk": 1,
+    "fields": {
+      "name": "基本情報",
+      "parent_id": null,
+      "level": 1,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "questions.category",
+    "pk": 2,
+    "fields": {
+      "name": "HTML",
+      "parent_id": null,
+      "level": 1,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "questions.category",
+    "pk": 3,
+    "fields": {
+      "name": "JavaScript",
+      "parent_id": null,
+      "level": 1,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "questions.category",
+    "pk": 4,
+    "fields": {
+      "name": "Python",
+      "parent_id": null,
+      "level": 1,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  }
+]
