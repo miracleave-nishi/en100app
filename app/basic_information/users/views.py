@@ -15,7 +15,7 @@ class LoginView(LoginView):
     template_name = "users/login/index.html"
 
     def get_success_url(self):
-        return reverse_lazy("mypage")
+        return reverse_lazy("home")
 
 
 class SignUpView(CreateView):
