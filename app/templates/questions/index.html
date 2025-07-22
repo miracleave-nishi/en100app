@@ -55,13 +55,12 @@
                         <div class="question-number">
                             <span class="number">{{ forloop.counter }}</span>
                         </div>
-                        <div class="question-meta">
-                            <span class="question-title">{{ question.title }}</span>
-                            <div class="question-tags">
-                                <span class="tag">基本情報</span>
-                                <span class="tag">午前</span>
+                            <div class="question-meta">
+                                <span class="question-title">{{ question.title }}</span>
+                                <div class="question-tags">
+                                    <span class="tag">{{ question.category.name }}</span>
+                                </div>
                             </div>
-                        </div>
                     </div>
                     
                     <div class="question-content">
