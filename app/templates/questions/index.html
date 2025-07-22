@@ -126,9 +126,9 @@
                             次の問題
                             <i class="fas fa-arrow-right ms-2"></i>
                         </button>
-                        <button type="submit" class="btn-submit" id="submitBtn" style="display: none;">
-                            <i class="fas fa-flag-checkered me-2"></i>
-                            演習を完了
+                        <button type="button" class="btn-submit" id="submitBtn" style="display: none;">
+                            <i class="fas fa-chart-bar me-2"></i>
+                            結果を見る
                         </button>
                         <a href="{% url 'home' %}" class="btn-back">
                             <i class="fas fa-home me-2"></i>
@@ -662,6 +662,9 @@
         answeredQuestions.add(questionId.toString());
     }
     
+    // 結果データを保存する配列
+    let questionResults = [];
+    
     // 回答提出ボタン
     document.getElementById('answerBtn').addEventListener('click', function() {
         const selectedAnswer = getSelectedAnswer();
@@ -688,6 +691,9 @@
                 return;
             }
             
+            // 結果を保存
+            questionResults.push(result);
+            
             displayResult(result);
             
             // ボタンを更新
@@ -708,6 +714,32 @@
         .catch(error => {
             console.error('Error:', error);
             alert('回答の送信に失敗しました。');
+        });
+    });
+    
+    // 結果提出ボタン
+    document.getElementById('submitBtn').addEventListener('click', function() {
+        // 結果データをセッションに保存
+        fetch('{% url "question_result" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify({
+                results: questionResults
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = '{% url "question_result" %}';
+            } else {
+                alert('結果の保存に失敗しました。');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('結果の保存に失敗しました。');
         });
     });
     

@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import JsonResponse
-from basic_information.questions.models import Question
+from basic_information.questions.models import Question, Answer
 from basic_information.questions.forms import QuestionForm
 
 
@@ -59,6 +59,80 @@ class QuestionListView(TemplateView):
         context["questions"] = questions
         context["results"] = results
         return self.render_to_response(context)
+
+
+class QuestionResultView(TemplateView):
+    template_name = "questions/result/index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # セッションから結果データを取得
+        session_results = self.request.session.get("question_results", [])
+
+        if not session_results:
+            # 結果がない場合は問題一覧にリダイレクト
+            from django.shortcuts import redirect
+
+            return redirect("question")
+
+        # 結果データを整形
+        questions = Question.objects.filter(
+            id__in=[r["question_id"] for r in session_results]
+        )
+        results = []
+
+        for result_data in session_results:
+            question = questions.filter(id=result_data["question_id"]).first()
+            if question:
+                results.append(
+                    {
+                        "question": question,
+                        "user_answer": result_data["user_answer"],
+                        "is_correct": result_data["is_correct"],
+                        "correct_answer": result_data["correct_answer"],
+                        "explanation": result_data["explanation"],
+                    }
+                )
+
+        # 統計情報を計算
+        total_questions = len(results)
+        correct_answers = sum(1 for r in results if r["is_correct"])
+        incorrect_answers = total_questions - correct_answers
+        accuracy_rate = (
+            (correct_answers / total_questions * 100) if total_questions > 0 else 0
+        )
+
+        context.update(
+            {
+                "results": results,
+                "total_questions": total_questions,
+                "correct_answers": correct_answers,
+                "incorrect_answers": incorrect_answers,
+                "accuracy_rate": round(accuracy_rate, 1),
+            }
+        )
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        import json
+
+        try:
+            # JSONデータを取得
+            data = json.loads(request.body)
+            results = data.get("results", [])
+
+            # セッションに結果を保存
+            request.session["question_results"] = results
+
+            return JsonResponse({"status": "success"})
+        except json.JSONDecodeError:
+            return JsonResponse(
+                {"status": "error", "message": "Invalid JSON"}, status=400
+            )
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
 
 class QuestionCreateView(LoginRequiredMixin, TemplateView):
