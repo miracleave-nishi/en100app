@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.http import JsonResponse
 from basic_information.questions.models import Question
 from basic_information.questions.forms import QuestionForm
 
@@ -17,6 +18,29 @@ class QuestionListView(TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
+        # 個別の問題回答処理
+        question_id = request.POST.get("question_id")
+        user_answer = request.POST.get("user_answer")
+
+        if question_id and user_answer:
+            try:
+                question = Question.objects.get(id=question_id)
+                is_correct = user_answer == str(question.correct_option)
+
+                # 結果を返す
+                result = {
+                    "question_id": question.id,
+                    "is_correct": is_correct,
+                    "correct_answer": question.correct_option,
+                    "explanation": question.explanation,
+                    "user_answer": user_answer,
+                }
+
+                return JsonResponse(result)
+            except Question.DoesNotExist:
+                return JsonResponse({"error": "問題が見つかりません"}, status=404)
+
+        # 従来の全問題一括処理（フォールバック）
         questions = Question.objects.all()
         results = []
 

@@ -22,8 +22,10 @@
                     </div>
                     <div class="progress-info">
                         <div class="question-count">
-                            <span class="current-count">{{ questions|length }}</span>
-                            <span class="total-count">問</span>
+                            <span class="current-count" id="currentQuestion">1</span>
+                            <span class="separator">/</span>
+                            <span class="total-count">{{ questions|length }}</span>
+                            <span class="total-label">問</span>
                         </div>
                         <div class="time-display">
                             <i class="fas fa-clock me-1"></i>
@@ -33,12 +35,22 @@
                 </div>
             </div>
 
+            <!-- プログレスバー -->
+            <div class="progress-container mb-4">
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar" role="progressbar" style="width: 0%"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="progressText">0%</span>
+                </div>
+            </div>
+
             <!-- メインフォーム -->
-            <form method="post" class="practice-form">
-    {% csrf_token %}
+            <form method="post" class="practice-form" id="questionForm">
+                {% csrf_token %}
                 
-    {% for question in questions %}
-                <div class="question-card" data-question="{{ forloop.counter }}">
+                {% for question in questions %}
+                <div class="question-card" data-question="{{ forloop.counter }}" {% if forloop.counter != 1 %}style="display: none;"{% endif %}>
                     <div class="question-header">
                         <div class="question-number">
                             <span class="number">{{ forloop.counter }}</span>
@@ -57,28 +69,28 @@
                         
                         <div class="options-container">
                             <div class="option-item">
-                                <input type="radio" name="question_{{ question.id }}" value="1" id="q{{ question.id }}_1">
+                                <input type="radio" name="question_{{ question.id }}" value="1" id="q{{ question.id }}_1" data-question-id="{{ question.id }}">
                                 <label for="q{{ question.id }}_1" class="option-label">
                                     <span class="option-marker">ア</span>
                                     <span class="option-text">{{ question.option_1 }}</span>
                                 </label>
                             </div>
                             <div class="option-item">
-                                <input type="radio" name="question_{{ question.id }}" value="2" id="q{{ question.id }}_2">
+                                <input type="radio" name="question_{{ question.id }}" value="2" id="q{{ question.id }}_2" data-question-id="{{ question.id }}">
                                 <label for="q{{ question.id }}_2" class="option-label">
                                     <span class="option-marker">イ</span>
                                     <span class="option-text">{{ question.option_2 }}</span>
                                 </label>
                             </div>
                             <div class="option-item">
-                                <input type="radio" name="question_{{ question.id }}" value="3" id="q{{ question.id }}_3">
+                                <input type="radio" name="question_{{ question.id }}" value="3" id="q{{ question.id }}_3" data-question-id="{{ question.id }}">
                                 <label for="q{{ question.id }}_3" class="option-label">
                                     <span class="option-marker">ウ</span>
                                     <span class="option-text">{{ question.option_3 }}</span>
                                 </label>
                             </div>
                             <div class="option-item">
-                                <input type="radio" name="question_{{ question.id }}" value="4" id="q{{ question.id }}_4">
+                                <input type="radio" name="question_{{ question.id }}" value="4" id="q{{ question.id }}_4" data-question-id="{{ question.id }}">
                                 <label for="q{{ question.id }}_4" class="option-label">
                                     <span class="option-marker">エ</span>
                                     <span class="option-text">{{ question.option_4 }}</span>
@@ -86,43 +98,46 @@
                             </div>
                         </div>
 
-        {% if results %}
-            {% for result in results %}
-                {% if result.question.id == question.id %}
-                                    <div class="result-section">
-                                        <div class="result-status {% if result.is_correct %}correct{% else %}incorrect{% endif %}">
-                                            <i class="fas {% if result.is_correct %}fa-check-circle{% else %}fa-times-circle{% endif %}"></i>
-                                            <span>{% if result.is_correct %}正解{% else %}不正解{% endif %}</span>
-                                        </div>
-                                        <div class="explanation-box">
-                                            <h6 class="explanation-title">
-                                                <i class="fas fa-lightbulb me-2"></i>
-                                                解説
-                                            </h6>
-                                            <p class="explanation-text">{{ result.question.explanation }}</p>
-                                        </div>
-                                    </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
+                        <!-- 結果表示エリア -->
+                        <div class="result-section" id="result_{{ question.id }}" style="display: none;">
+                            <div class="result-status" id="resultStatus_{{ question.id }}">
+                                <i class="fas" id="resultIcon_{{ question.id }}"></i>
+                                <span id="resultText_{{ question.id }}"></span>
+                            </div>
+                            <div class="explanation-box">
+                                <h6 class="explanation-title">
+                                    <i class="fas fa-lightbulb me-2"></i>
+                                    解説
+                                </h6>
+                                <p class="explanation-text" id="explanation_{{ question.id }}"></p>
+                            </div>
+                        </div>
                     </div>
-    </div>
-    {% endfor %}
+                </div>
+                {% endfor %}
 
-                <!-- 送信ボタンセクション -->
-                <div class="submit-section">
-                    <div class="submit-actions">
-                        <button type="submit" class="btn-submit">
+                <!-- ナビゲーションボタンセクション -->
+                <div class="navigation-section">
+                    <div class="navigation-actions">
+                        <button type="button" class="btn-answer" id="answerBtn">
                             <i class="fas fa-check me-2"></i>
                             回答を提出
                         </button>
+                        <button type="button" class="btn-next" id="nextBtn" style="display: none;">
+                            次の問題
+                            <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                        <button type="submit" class="btn-submit" id="submitBtn" style="display: none;">
+                            <i class="fas fa-flag-checkered me-2"></i>
+                            演習を完了
+                        </button>
                         <a href="{% url 'home' %}" class="btn-back">
-                            <i class="fas fa-arrow-left me-2"></i>
-                            戻る
+                            <i class="fas fa-home me-2"></i>
+                            ホームに戻る
                         </a>
                     </div>
                 </div>
-</form>
+            </form>
         </div>
     </div>
 </div>
@@ -182,7 +197,17 @@
         color: #2c5aa0;
     }
 
+    .separator {
+        font-size: 0.9rem;
+        color: #495057;
+    }
+
     .total-count {
+        font-size: 1.2rem;
+        color: #2c5aa0;
+    }
+
+    .total-label {
         font-size: 0.9rem;
         color: #495057;
     }
@@ -193,6 +218,34 @@
         color: #495057;
         font-weight: 500;
         font-size: 0.95rem;
+    }
+
+    .progress-container {
+        background: #ffffff;
+        border-radius: 8px;
+        padding: 1rem 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid #dee2e6;
+    }
+
+    .progress {
+        height: 8px;
+        background-color: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+
+    .progress-bar {
+        background-color: #2c5aa0;
+        transition: width 0.3s ease;
+    }
+
+    .progress-text {
+        text-align: center;
+        font-size: 0.9rem;
+        color: #495057;
+        font-weight: 500;
     }
 
     .practice-form {
@@ -376,7 +429,7 @@
         margin: 0;
     }
 
-    .submit-section {
+    .navigation-section {
         background: #ffffff;
         border-radius: 8px;
         padding: 1.5rem;
@@ -385,41 +438,56 @@
         margin-top: 2rem;
     }
 
-    .submit-actions {
+    .navigation-actions {
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 1rem;
     }
 
-    .btn-submit {
-        background: #2c5aa0;
-        color: white;
-        border: none;
-        padding: 0.75rem 2rem;
+    .btn-next, .btn-answer, .btn-submit, .btn-back {
+        padding: 0.75rem 1.5rem;
         border-radius: 6px;
         font-weight: 600;
         font-size: 0.95rem;
         cursor: pointer;
-        transition: background-color 0.2s ease;
+        transition: all 0.2s ease;
         display: flex;
         align-items: center;
+        text-decoration: none;
+        border: none;
+    }
+
+    .btn-answer {
+        background: #2c5aa0;
+        color: white;
+    }
+
+    .btn-answer:hover {
+        background: #1e3d72;
+    }
+
+    .btn-next {
+        background: #28a745;
+        color: white;
+    }
+
+    .btn-next:hover {
+        background: #218838;
+    }
+
+    .btn-submit {
+        background: #dc3545;
+        color: white;
     }
 
     .btn-submit:hover {
-        background: #1e3d72;
+        background: #c82333;
     }
 
     .btn-back {
         background: #6c757d;
         color: white;
-        text-decoration: none;
-        padding: 0.75rem 2rem;
-        border-radius: 6px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        transition: background-color 0.2s ease;
-        display: flex;
-        align-items: center;
     }
 
     .btn-back:hover {
@@ -453,12 +521,12 @@
             padding: 0.6rem;
         }
 
-        .submit-actions {
+        .navigation-actions {
             flex-direction: column;
             align-items: center;
         }
 
-        .btn-submit, .btn-back {
+        .btn-next, .btn-answer, .btn-submit, .btn-back {
             width: 100%;
             justify-content: center;
         }
@@ -503,6 +571,157 @@
     
     // 1秒ごとにタイマーを更新
     setInterval(updateTimer, 1000);
+
+    // 問題ナビゲーション機能
+    let currentQuestionIndex = 1;
+    const totalQuestions = {{ questions|length }};
+    let answeredQuestions = new Set();
+    
+    function updateProgress() {
+        const progress = (currentQuestionIndex / totalQuestions) * 100;
+        document.getElementById('progressBar').style.width = progress + '%';
+        document.getElementById('progressText').textContent = Math.round(progress) + '%';
+        document.getElementById('currentQuestion').textContent = currentQuestionIndex;
+    }
+    
+    function showQuestion(index) {
+        // 全ての問題を非表示
+        document.querySelectorAll('.question-card').forEach(card => {
+            card.style.display = 'none';
+        });
+        
+        // 指定された問題を表示
+        const targetCard = document.querySelector(`[data-question="${index}"]`);
+        if (targetCard) {
+            targetCard.style.display = 'block';
+        }
+        
+        // ボタンの表示/非表示を制御
+        const answerBtn = document.getElementById('answerBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        // 現在の問題が回答済みかチェック
+        const currentQuestionId = getCurrentQuestionId();
+        if (answeredQuestions.has(currentQuestionId)) {
+            answerBtn.style.display = 'none';
+            if (index === totalQuestions) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'flex';
+            } else {
+                nextBtn.style.display = 'flex';
+                submitBtn.style.display = 'none';
+            }
+        } else {
+            answerBtn.style.display = 'flex';
+            nextBtn.style.display = 'none';
+            submitBtn.style.display = 'none';
+        }
+        
+        updateProgress();
+    }
+    
+    function getCurrentQuestionId() {
+        const currentCard = document.querySelector(`[data-question="${currentQuestionIndex}"]`);
+        const radioInputs = currentCard.querySelectorAll('input[type="radio"]');
+        if (radioInputs.length > 0) {
+            return radioInputs[0].getAttribute('data-question-id');
+        }
+        return null;
+    }
+    
+    function getSelectedAnswer() {
+        const currentCard = document.querySelector(`[data-question="${currentQuestionIndex}"]`);
+        const selectedRadio = currentCard.querySelector('input[type="radio"]:checked');
+        return selectedRadio ? selectedRadio.value : null;
+    }
+    
+    function displayResult(result) {
+        const questionId = result.question_id;
+        const resultSection = document.getElementById(`result_${questionId}`);
+        const resultStatus = document.getElementById(`resultStatus_${questionId}`);
+        const resultIcon = document.getElementById(`resultIcon_${questionId}`);
+        const resultText = document.getElementById(`resultText_${questionId}`);
+        const explanation = document.getElementById(`explanation_${questionId}`);
+        
+        // 結果を表示
+        resultSection.style.display = 'block';
+        
+        if (result.is_correct) {
+            resultStatus.className = 'result-status correct';
+            resultIcon.className = 'fas fa-check-circle';
+            resultText.textContent = '正解';
+        } else {
+            resultStatus.className = 'result-status incorrect';
+            resultIcon.className = 'fas fa-times-circle';
+            resultText.textContent = '不正解';
+        }
+        
+        explanation.textContent = result.explanation;
+        
+        // 回答済みとしてマーク
+        answeredQuestions.add(questionId.toString());
+    }
+    
+    // 回答提出ボタン
+    document.getElementById('answerBtn').addEventListener('click', function() {
+        const selectedAnswer = getSelectedAnswer();
+        if (!selectedAnswer) {
+            alert('選択肢を選んでください。');
+            return;
+        }
+        
+        const questionId = getCurrentQuestionId();
+        const formData = new FormData();
+        formData.append('question_id', questionId);
+        formData.append('user_answer', selectedAnswer);
+        formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+        
+        // 回答を送信
+        fetch('', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.error) {
+                alert('エラーが発生しました: ' + result.error);
+                return;
+            }
+            
+            displayResult(result);
+            
+            // ボタンを更新
+            const answerBtn = document.getElementById('answerBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            answerBtn.style.display = 'none';
+            
+            if (currentQuestionIndex === totalQuestions) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'flex';
+            } else {
+                nextBtn.style.display = 'flex';
+                submitBtn.style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('回答の送信に失敗しました。');
+        });
+    });
+    
+    // 次の問題ボタン
+    document.getElementById('nextBtn').addEventListener('click', function() {
+        if (currentQuestionIndex < totalQuestions) {
+            currentQuestionIndex++;
+            showQuestion(currentQuestionIndex);
+        }
+    });
+    
+    // 初期化
+    updateProgress();
 </script>
 
 {% endblock %}
