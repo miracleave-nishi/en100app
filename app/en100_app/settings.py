@@ -24,7 +24,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "basic_information",  # 追加したアプリケーション
+    "basic_information",
+    "basic_information.users",
+    "basic_information.questions",
+    "basic_information.home",
+    "basic_information.stamp",
+    "basic_information.ranking",
 ]
 
 MIDDLEWARE = [
@@ -117,6 +122,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # ユーザー管理モデルをCustomUserに変更
-AUTH_USER_MODEL = "basic_information.CustomUser"
+AUTH_USER_MODEL = "users.CustomUser"
 
-LOGIN_URL = "/login/"
+LOGIN_URL = "/users/login/"

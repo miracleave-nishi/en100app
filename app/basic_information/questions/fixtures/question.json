@@ -1,0 +1,74 @@
+[
+  {
+    "model": "questions.question",
+    "pk": 1,
+    "fields": {
+      "title": "コンピュータの五大装置とは？",
+      "content": "コンピュータの五大装置について正しい組み合わせを選びなさい。",
+      "category": 1,
+      "created_by": null,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "option_1": "制御装置、演算装置、記憶装置、入力装置、出力装置",
+      "option_2": "CPU、メモリ、ハードディスク、キーボード、ディスプレイ",
+      "option_3": "プロセッサ、RAM、ROM、マウス、プリンター",
+      "option_4": "中央処理装置、主記憶装置、補助記憶装置、入力機器、出力機器",
+      "correct_option": 1,
+      "explanation": "コンピュータの五大装置は、制御装置、演算装置、記憶装置、入力装置、出力装置です。これらはコンピュータの基本構成要素として知られています。"
+    }
+  },
+  {
+    "model": "questions.question",
+    "pk": 2,
+    "fields": {
+      "title": "HTMLの基本構造について",
+      "content": "HTML文書の基本的な構造として正しいものを選びなさい。",
+      "category": 2,
+      "created_by": null,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "option_1": "<html><head><title></title></head><body></body></html>",
+      "option_2": "<!DOCTYPE html><html><body><head><title></title></head></body></html>",
+      "option_3": "<html><body><head><title></title></head></body></html>",
+      "option_4": "<!DOCTYPE html><html><head><title></title></head><body></body></html>",
+      "correct_option": 4,
+      "explanation": "正しいHTMLの基本構造は、<!DOCTYPE html>宣言から始まり、<html>要素の中に<head>要素（その中に<title>要素）と<body>要素が含まれます。"
+    }
+  },
+  {
+    "model": "questions.question",
+    "pk": 3,
+    "fields": {
+      "title": "JavaScriptの変数宣言について",
+      "content": "JavaScriptで変数を宣言する際、再代入が可能で、ブロックスコープを持つ宣言方法はどれですか？",
+      "category": 3,
+      "created_by": null,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "option_1": "var",
+      "option_2": "let",
+      "option_3": "const",
+      "option_4": "function",
+      "correct_option": 2,
+      "explanation": "letキーワードは再代入が可能で、ブロックスコープを持ちます。varは関数スコープ、constは再代入不可、functionは関数宣言です。"
+    }
+  },
+  {
+    "model": "questions.question",
+    "pk": 4,
+    "fields": {
+      "title": "Pythonのリスト操作について",
+      "content": "Pythonでリストの末尾に要素を追加するメソッドはどれですか？",
+      "category": 4,
+      "created_by": null,
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "option_1": "append()",
+      "option_2": "add()",
+      "option_3": "insert()",
+      "option_4": "push()",
+      "correct_option": 1,
+      "explanation": "append()メソッドはリストの末尾に要素を追加します。add()は存在しません。insert()は指定位置に挿入、push()はJavaScriptのメソッドです。"
+    }
+  }
+] 

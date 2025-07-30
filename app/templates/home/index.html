@@ -151,6 +151,7 @@
 
         <!-- サイドバー -->
         <div class="col-lg-4">
+
             <!-- 学習カレンダー -->
             <div class="mb-4">
                 <h6 class="sidebar-title">
@@ -159,10 +160,14 @@
                 </h6>
                 <div class="calendar-card">
                     <div class="calendar-header">
-                        <span class="calendar-month">12月 2024</span>
+                        <span class="calendar-month">{{ current_month }}月 {{ current_year }}</span>
                         <div class="calendar-nav">
-                            <i class="fas fa-chevron-left"></i>
-                            <i class="fas fa-chevron-right"></i>
+                            <a href="?year={{ prev_year }}&month={{ prev_month }}">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                            <a href="?year={{ next_year }}&month={{ next_month }}">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
                         </div>
                     </div>
                     <div class="calendar-grid">
@@ -173,23 +178,21 @@
                         <div class="calendar-day-header">木</div>
                         <div class="calendar-day-header">金</div>
                         <div class="calendar-day-header">土</div>
-                        <div class="calendar-day">1</div>
-                        <div class="calendar-day">2</div>
-                        <div class="calendar-day active">3</div>
-                        <div class="calendar-day studied">4</div>
-                        <div class="calendar-day studied">5</div>
-                        <div class="calendar-day studied">6</div>
-                        <div class="calendar-day current">7</div>
-                        <div class="calendar-day">8</div>
-                        <div class="calendar-day">9</div>
-                        <div class="calendar-day">10</div>
-                        <div class="calendar-day">11</div>
-                        <div class="calendar-day">12</div>
-                        <div class="calendar-day">13</div>
-                        <div class="calendar-day">14</div>
+
+                        {% for day in calendar_days %}
+                            <div class="calendar-day
+                                {% if day.is_current %} current{% endif %}
+                                {% if day.is_studied %} studied{% endif %}
+                                {% if day.is_active %} active{% endif %}
+                                {% if day.is_other_month %} other-month{% endif %}
+                            ">
+                                {{ day.day_number }}
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
+
 
             <!-- 達成度 -->
             <div class="mb-4">
@@ -367,7 +370,7 @@
         line-height: 1.2;
     }
 
-    /* インライン表示用（mypage.htmlのwelcome用） */
+    /* インライン表示用（home.htmlのwelcome用） */
     .app-logo-component.inline {
         gap: 0.5rem;
     }
@@ -726,6 +729,10 @@
     .calendar-day.active {
         background: #6c757d;
         color: white;
+    }
+
+    .calendar-day.other-month {
+        color: #adb5bd;
     }
 
     .achievement-item {
