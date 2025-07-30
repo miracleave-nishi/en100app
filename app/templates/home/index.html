@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}勉強アプリ（ロゴ）{% endblock %}
+{% block title %}勉強アプリ{% endblock %}
 {% block content %}
 
 <!-- Font Awesome CDN for icons -->
@@ -132,11 +132,6 @@
                                     <div class="tags">
                                         <span class="tag create-tag">作成</span>
                                         <span class="tag create-tag">カスタム</span>
-                                    </div>
-                                </div>
-                                <div class="subject-progress">
-                                    <div class="create-badge">
-                                        <i class="fas fa-sparkles"></i>
                                     </div>
                                 </div>
                                 <a href="{% url 'question_create' %}" class="subject-btn create-btn">
